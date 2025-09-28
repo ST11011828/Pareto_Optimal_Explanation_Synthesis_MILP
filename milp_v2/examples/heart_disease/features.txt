@@ -1,0 +1,67 @@
+age
+chol
+cp
+exang
+fbs
+oldpeak
+restecg
+sex
+slope
+thalach
+trestbps
+
+predicate: age : 3 : 3
+age < 45.0
+45.0 <= age < 61.0
+age >= 61.0
+
+predicate: chol : 3 : 3
+chol < 272.0
+272.0 <= chol < 418.0
+chol >= 418.0
+
+predicate: cp : 3 : 3
+cp < 2.0
+2.0 <= cp < 3.0
+cp >= 3.0
+
+predicate: exang : 3 : 3
+exang < 0.3333333333333333
+0.3333333333333333 <= exang < 0.6666666666666666
+exang >= 0.6666666666666666
+
+predicate: fbs : 3 : 3
+fbs < 0.3333333333333333
+0.3333333333333333 <= fbs < 0.6666666666666666
+fbs >= 0.6666666666666666
+
+predicate: oldpeak : 3 : 3
+oldpeak < 2.066666666666667
+2.066666666666667 <= oldpeak < 4.133333333333334
+oldpeak >= 4.133333333333334
+
+predicate: restecg : 3 : 3
+restecg < 0.6666666666666666
+0.6666666666666666 <= restecg < 1.3333333333333333
+restecg >= 1.3333333333333333
+
+predicate: sex : 3 : 3
+sex < 0.3333333333333333
+0.3333333333333333 <= sex < 0.6666666666666666
+sex >= 0.6666666666666666
+
+predicate: slope : 3 : 3
+slope < 1.6666666666666665
+1.6666666666666665 <= slope < 2.333333333333333
+slope >= 2.333333333333333
+
+predicate: thalach : 3 : 3
+thalach < 114.66666666666666
+114.66666666666666 <= thalach < 158.33333333333331
+thalach >= 158.33333333333331
+
+predicate: trestbps : 3 : 3
+trestbps < 129.33333333333334
+129.33333333333334 <= trestbps < 164.66666666666669
+trestbps >= 164.66666666666669
+

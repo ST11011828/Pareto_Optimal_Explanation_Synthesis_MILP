@@ -1,0 +1,42 @@
+Input parent directory: Set parameter Username
+Set parameter LicenseID to value 2696634
+Academic license - for non-commercial use only - expires 2026-08-19
+Enter the number of nodes:Enter the maximum number of buckets you want:Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Linux Mint 22.1")
+
+CPU model: 13th Gen Intel(R) Core(TM) i7-13700H, instruction set [SSE2|AVX|AVX2]
+Thread count: 20 physical cores, 20 logical processors, using up to 20 threads
+
+Optimize a model with 3180657 rows, 677146 columns and 9952426 nonzeros
+Model fingerprint: 0xb383b75d
+Variable types: 675766 continuous, 1380 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 4e+00]
+  Objective range  [2e-03, 4e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+03]
+Presolve removed 1970896 rows and 423807 columns (presolve time = 5s)...
+Presolve removed 1971013 rows and 423924 columns (presolve time = 10s)...
+Presolve removed 1971093 rows and 423957 columns (presolve time = 15s)...
+Presolve removed 2000869 rows and 424001 columns (presolve time = 20s)...
+Presolve removed 2866033 rows and 608789 columns
+Presolve time: 23.43s
+Presolved: 314624 rows, 68357 columns, 995777 nonzeros
+Variable types: 66972 continuous, 1385 integer (1385 binary)
+Found heuristic solution: objective 23.2663657
+Found heuristic solution: objective 23.3860045
+Found heuristic solution: objective 23.7336343
+Performing another presolve...
+Presolve removed 30029 rows and 5540 columns (presolve time = 5s)...
+Presolve removed 30690 rows and 5550 columns (presolve time = 10s)...
+Presolve removed 31901 rows and 5550 columns
+Presolve time: 12.45s
+
+Deterministic concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Root barrier log...
+
+Elapsed ordering time = 5s
+Ordering time: 50.80s
+Elapsed ordering time = 53s
+Elapsed ordering time = 55s

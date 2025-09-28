@@ -1,0 +1,23 @@
+clouds_6
+day_time_3
+init_pos_4
+
+predicate: clouds_6 : 6 : 1
+clouds_6 == 0
+clouds_6 == 1
+clouds_6 == 2
+clouds_6 == 3
+clouds_6 == 4
+clouds_6 == 5
+
+predicate: day_time_3 : 3 : 4
+54000.0 < day_time_3 <= 72000.0
+72000.0 < day_time_3 <= 94000.0
+day_time_3 <= 54000.0 or day_time_3 > 94000.0
+
+predicate: init_pos_4 : 4 : 3
+init_pos_4 < 0.5
+0.5 <= init_pos_4 < 2.5
+2.5 <= init_pos_4 < 3.4
+init_pos_4 >= 3.4
+

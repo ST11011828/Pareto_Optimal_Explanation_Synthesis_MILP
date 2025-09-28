@@ -1,0 +1,181 @@
+area1
+area2
+area3
+compactness1
+compactness2
+compactness3
+concave_points1
+concave_points2
+concave_points3
+concavity1
+concavity2
+concavity3
+fractal_dimension1
+fractal_dimension2
+fractal_dimension3
+perimeter1
+perimeter2
+perimeter3
+radius1
+radius2
+radius3
+smoothness1
+smoothness2
+smoothness3
+symmetry1
+symmetry2
+symmetry3
+texture1
+texture2
+texture3
+
+predicate: area1 : 3 : 3
+area1 < 929.3333333333334
+929.3333333333334 <= area1 < 1715.1666666666667
+area1 >= 1715.1666666666667
+
+predicate: area2 : 3 : 3
+area2 < 185.268
+185.268 <= area2 < 363.73400000000004
+area2 >= 363.73400000000004
+
+predicate: area3 : 3 : 3
+area3 < 1541.4666666666667
+1541.4666666666667 <= area3 < 2897.733333333333
+area3 >= 2897.733333333333
+
+predicate: compactness1 : 3 : 3
+compactness1 < 0.12805333333333332
+0.12805333333333332 <= compactness1 < 0.23672666666666667
+compactness1 >= 0.23672666666666667
+
+predicate: compactness2 : 3 : 3
+compactness2 < 0.04663466666666666
+0.04663466666666666 <= compactness2 < 0.09101733333333333
+compactness2 >= 0.09101733333333333
+
+predicate: compactness3 : 3 : 3
+compactness3 < 0.37085999999999997
+0.37085999999999997 <= compactness3 < 0.71443
+compactness3 >= 0.71443
+
+predicate: concave_points1 : 3 : 3
+concave_points1 < 0.06706666666666666
+0.06706666666666666 <= concave_points1 < 0.13413333333333333
+concave_points1 >= 0.13413333333333333
+
+predicate: concave_points2 : 3 : 3
+concave_points2 < 0.017596666666666667
+0.017596666666666667 <= concave_points2 < 0.03519333333333333
+concave_points2 >= 0.03519333333333333
+
+predicate: concave_points3 : 3 : 3
+concave_points3 < 0.09699999999999999
+0.09699999999999999 <= concave_points3 < 0.19399999999999998
+concave_points3 >= 0.19399999999999998
+
+predicate: concavity1 : 3 : 3
+concavity1 < 0.14226666666666668
+0.14226666666666668 <= concavity1 < 0.28453333333333336
+concavity1 >= 0.28453333333333336
+
+predicate: concavity2 : 3 : 3
+concavity2 < 0.132
+0.132 <= concavity2 < 0.264
+concavity2 >= 0.264
+
+predicate: concavity3 : 3 : 3
+concavity3 < 0.41733333333333333
+0.41733333333333333 <= concavity3 < 0.8346666666666667
+concavity3 >= 0.8346666666666667
+
+predicate: fractal_dimension1 : 3 : 3
+fractal_dimension1 < 0.06578666666666666
+0.06578666666666666 <= fractal_dimension1 < 0.08161333333333333
+fractal_dimension1 >= 0.08161333333333333
+
+predicate: fractal_dimension2 : 3 : 3
+fractal_dimension2 < 0.010543199999999999
+0.010543199999999999 <= fractal_dimension2 < 0.0201916
+fractal_dimension2 >= 0.0201916
+
+predicate: fractal_dimension3 : 3 : 3
+fractal_dimension3 < 0.10586
+0.10586 <= fractal_dimension3 < 0.15667999999999999
+fractal_dimension3 >= 0.15667999999999999
+
+predicate: perimeter1 : 3 : 3
+perimeter1 < 92.02666666666667
+92.02666666666667 <= perimeter1 < 140.26333333333335
+perimeter1 >= 140.26333333333335
+
+predicate: perimeter2 : 3 : 3
+perimeter2 < 7.831333333333332
+7.831333333333332 <= perimeter2 < 14.905666666666665
+perimeter2 >= 14.905666666666665
+
+predicate: perimeter3 : 3 : 3
+perimeter3 < 117.33999999999999
+117.33999999999999 <= perimeter3 < 184.26999999999998
+perimeter3 >= 184.26999999999998
+
+predicate: radius1 : 3 : 3
+radius1 < 14.024
+14.024 <= radius1 < 21.067
+radius1 >= 21.067
+
+predicate: radius2 : 3 : 3
+radius2 < 1.032
+1.032 <= radius2 < 1.9525000000000001
+radius2 >= 1.9525000000000001
+
+predicate: radius3 : 3 : 3
+radius3 < 17.299999999999997
+17.299999999999997 <= radius3 < 26.669999999999998
+radius3 >= 26.669999999999998
+
+predicate: smoothness1 : 3 : 3
+smoothness1 < 0.08955333333333333
+0.08955333333333333 <= smoothness1 < 0.12647666666666665
+smoothness1 >= 0.12647666666666665
+
+predicate: smoothness2 : 3 : 3
+smoothness2 < 0.011518666666666667
+0.011518666666666667 <= smoothness2 < 0.021324333333333334
+smoothness2 >= 0.021324333333333334
+
+predicate: smoothness3 : 3 : 3
+smoothness3 < 0.12164666666666667
+0.12164666666666667 <= smoothness3 < 0.17212333333333335
+smoothness3 >= 0.17212333333333335
+
+predicate: symmetry1 : 3 : 3
+symmetry1 < 0.172
+0.172 <= symmetry1 < 0.238
+symmetry1 >= 0.238
+
+predicate: symmetry2 : 3 : 3
+symmetry2 < 0.03157133333333334
+0.03157133333333334 <= symmetry2 < 0.05526066666666667
+symmetry2 >= 0.05526066666666667
+
+predicate: symmetry3 : 3 : 3
+symmetry3 < 0.3256
+0.3256 <= symmetry3 < 0.49470000000000003
+symmetry3 >= 0.49470000000000003
+
+predicate: texture1 : 3 : 3
+texture1 < 19.56666666666667
+19.56666666666667 <= texture1 < 29.423333333333336
+texture1 >= 29.423333333333336
+
+predicate: texture2 : 3 : 3
+texture2 < 1.8684666666666667
+1.8684666666666667 <= texture2 < 3.376733333333333
+texture2 >= 3.376733333333333
+
+predicate: texture3 : 3 : 3
+texture3 < 24.526666666666664
+24.526666666666664 <= texture3 < 37.03333333333333
+texture3 >= 37.03333333333333
+

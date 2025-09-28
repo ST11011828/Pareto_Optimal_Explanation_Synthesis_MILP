@@ -1,0 +1,18 @@
+radius_mean
+texture_mean
+area_mean
+
+predicate: radius_mean : 3 : 1
+radius_mean < 12
+12 <= radius_mean < 18
+radius_mean >= 18
+
+predicate: texture_mean : 3 : 1
+texture_mean < 15
+15 <= texture_mean < 25
+texture_mean >= 25
+
+predicate: area_mean : 3 : 1
+area_mean < 500
+500 <= area_mean < 1000
+area_mean >= 1000

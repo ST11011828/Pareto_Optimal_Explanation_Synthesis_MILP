@@ -1,0 +1,40 @@
+buying
+doors
+lug_boot
+maint
+persons
+safety
+
+predicate: buying : 4 : 3
+buying == high
+buying == low
+buying == med
+buying == vhigh
+
+predicate: doors : 4 : 3
+doors == 2
+doors == 3
+doors == 4
+doors == 5more
+
+predicate: lug_boot : 3 : 3
+lug_boot == big
+lug_boot == med
+lug_boot == small
+
+predicate: maint : 4 : 3
+maint == high
+maint == low
+maint == med
+maint == vhigh
+
+predicate: persons : 3 : 3
+persons == 2
+persons == 4
+persons == more
+
+predicate: safety : 3 : 3
+safety == high
+safety == low
+safety == med
+

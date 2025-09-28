@@ -1,0 +1,85 @@
+age
+bathroom_needs_keeps_patient_from_sleeping
+dental_health
+employment
+gender
+medication_keeps_patient_from_sleeping
+mental_health
+pain_keeps_patient_from_sleeping
+physical_health
+prescription_sleep_medication
+race
+stress_keeps_patient_from_sleeping
+trouble_sleeping
+uknown_keeps_patient_from_sleeping
+
+predicate: age : 3 : 3
+age < 2.0
+2.0 <= age < 2.0
+age >= 2.0
+
+predicate: bathroom_needs_keeps_patient_from_sleeping : 3 : 3
+bathroom_needs_keeps_patient_from_sleeping < 0.3333333333333333
+0.3333333333333333 <= bathroom_needs_keeps_patient_from_sleeping < 0.6666666666666666
+bathroom_needs_keeps_patient_from_sleeping >= 0.6666666666666666
+
+predicate: dental_health : 3 : 3
+dental_health < 1.3333333333333335
+1.3333333333333335 <= dental_health < 3.666666666666667
+dental_health >= 3.666666666666667
+
+predicate: employment : 3 : 3
+employment < 2.0
+2.0 <= employment < 3.0
+employment >= 3.0
+
+predicate: gender : 3 : 3
+gender < 1.3333333333333333
+1.3333333333333333 <= gender < 1.6666666666666665
+gender >= 1.6666666666666665
+
+predicate: medication_keeps_patient_from_sleeping : 3 : 3
+medication_keeps_patient_from_sleeping < 0.3333333333333333
+0.3333333333333333 <= medication_keeps_patient_from_sleeping < 0.6666666666666666
+medication_keeps_patient_from_sleeping >= 0.6666666666666666
+
+predicate: mental_health : 3 : 3
+mental_health < 1.0
+1.0 <= mental_health < 3.0
+mental_health >= 3.0
+
+predicate: pain_keeps_patient_from_sleeping : 3 : 3
+pain_keeps_patient_from_sleeping < 0.3333333333333333
+0.3333333333333333 <= pain_keeps_patient_from_sleeping < 0.6666666666666666
+pain_keeps_patient_from_sleeping >= 0.6666666666666666
+
+predicate: physical_health : 3 : 3
+physical_health < 1.0
+1.0 <= physical_health < 3.0
+physical_health >= 3.0
+
+predicate: prescription_sleep_medication : 3 : 3
+prescription_sleep_medication < 0.33333333333333326
+0.33333333333333326 <= prescription_sleep_medication < 1.6666666666666665
+prescription_sleep_medication >= 1.6666666666666665
+
+predicate: race : 3 : 3
+race < 2.333333333333333
+2.333333333333333 <= race < 3.6666666666666665
+race >= 3.6666666666666665
+
+predicate: stress_keeps_patient_from_sleeping : 3 : 3
+stress_keeps_patient_from_sleeping < 0.3333333333333333
+0.3333333333333333 <= stress_keeps_patient_from_sleeping < 0.6666666666666666
+stress_keeps_patient_from_sleeping >= 0.6666666666666666
+
+predicate: trouble_sleeping : 3 : 3
+trouble_sleeping < 0.33333333333333326
+0.33333333333333326 <= trouble_sleeping < 1.6666666666666665
+trouble_sleeping >= 1.6666666666666665
+
+predicate: uknown_keeps_patient_from_sleeping : 3 : 3
+uknown_keeps_patient_from_sleeping < 0.3333333333333333
+0.3333333333333333 <= uknown_keeps_patient_from_sleeping < 0.6666666666666666
+uknown_keeps_patient_from_sleeping >= 0.6666666666666666
+

@@ -1,0 +1,73 @@
+age
+anaemia
+creatinine_phosphokinase
+diabetes
+ejection_fraction
+high_blood_pressure
+platelets
+serum_creatinine
+serum_sodium
+sex
+smoking
+time
+
+predicate: age : 3 : 3
+age < 58.33333333333333
+58.33333333333333 <= age < 76.66666666666666
+age >= 76.66666666666666
+
+predicate: anaemia : 3 : 3
+anaemia < 0.3333333333333333
+0.3333333333333333 <= anaemia < 0.6666666666666666
+anaemia >= 0.6666666666666666
+
+predicate: creatinine_phosphokinase : 3 : 3
+creatinine_phosphokinase < 2635.6666666666665
+2635.6666666666665 <= creatinine_phosphokinase < 5248.333333333333
+creatinine_phosphokinase >= 5248.333333333333
+
+predicate: diabetes : 3 : 3
+diabetes < 0.3333333333333333
+0.3333333333333333 <= diabetes < 0.6666666666666666
+diabetes >= 0.6666666666666666
+
+predicate: ejection_fraction : 3 : 3
+ejection_fraction < 36.0
+36.0 <= ejection_fraction < 58.0
+ejection_fraction >= 58.0
+
+predicate: high_blood_pressure : 3 : 3
+high_blood_pressure < 0.3333333333333333
+0.3333333333333333 <= high_blood_pressure < 0.6666666666666666
+high_blood_pressure >= 0.6666666666666666
+
+predicate: platelets : 3 : 3
+platelets < 300066.6666666667
+300066.6666666667 <= platelets < 575033.3333333334
+platelets >= 575033.3333333334
+
+predicate: serum_creatinine : 3 : 3
+serum_creatinine < 3.466666666666667
+3.466666666666667 <= serum_creatinine < 6.433333333333334
+serum_creatinine >= 6.433333333333334
+
+predicate: serum_sodium : 3 : 3
+serum_sodium < 124.66666666666667
+124.66666666666667 <= serum_sodium < 136.33333333333334
+serum_sodium >= 136.33333333333334
+
+predicate: sex : 3 : 3
+sex < 0.3333333333333333
+0.3333333333333333 <= sex < 0.6666666666666666
+sex >= 0.6666666666666666
+
+predicate: smoking : 3 : 3
+smoking < 0.3333333333333333
+0.3333333333333333 <= smoking < 0.6666666666666666
+smoking >= 0.6666666666666666
+
+predicate: time : 3 : 3
+time < 97.66666666666667
+97.66666666666667 <= time < 191.33333333333334
+time >= 191.33333333333334
+

@@ -1,0 +1,24 @@
+left_distance
+left_weight
+right_distance
+right_weight
+
+predicate: left_distance : 3 : 3
+left_distance < 2.333333333333333
+2.333333333333333 <= left_distance < 3.6666666666666665
+left_distance >= 3.6666666666666665
+
+predicate: left_weight : 3 : 3
+left_weight < 2.333333333333333
+2.333333333333333 <= left_weight < 3.6666666666666665
+left_weight >= 3.6666666666666665
+
+predicate: right_distance : 3 : 3
+right_distance < 2.333333333333333
+2.333333333333333 <= right_distance < 3.6666666666666665
+right_distance >= 3.6666666666666665
+
+predicate: right_weight : 3 : 3
+right_weight < 2.333333333333333
+2.333333333333333 <= right_weight < 3.6666666666666665
+right_weight >= 3.6666666666666665

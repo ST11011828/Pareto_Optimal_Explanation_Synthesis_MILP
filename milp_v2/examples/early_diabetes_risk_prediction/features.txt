@@ -1,0 +1,82 @@
+age
+alopecia
+delayed_healing
+gender
+genital_thrush
+irritability
+itching
+muscle_stiffness
+obesity
+partial_paresis
+polydipsia
+polyphagia
+polyuria
+sudden_weight_loss
+visual_blurring
+weakness
+
+predicate: age : 3 : 3
+age < 40.66666666666667
+40.66666666666667 <= age < 65.33333333333334
+age >= 65.33333333333334
+
+predicate: alopecia : 2 : 3
+alopecia == No
+alopecia == Yes
+
+predicate: delayed_healing : 2 : 3
+delayed_healing == No
+delayed_healing == Yes
+
+predicate: gender : 2 : 3
+gender == Female
+gender == Male
+
+predicate: genital_thrush : 2 : 3
+genital_thrush == No
+genital_thrush == Yes
+
+predicate: irritability : 2 : 3
+irritability == No
+irritability == Yes
+
+predicate: itching : 2 : 3
+itching == No
+itching == Yes
+
+predicate: muscle_stiffness : 2 : 3
+muscle_stiffness == No
+muscle_stiffness == Yes
+
+predicate: obesity : 2 : 3
+obesity == No
+obesity == Yes
+
+predicate: partial_paresis : 2 : 3
+partial_paresis == No
+partial_paresis == Yes
+
+predicate: polydipsia : 2 : 3
+polydipsia == No
+polydipsia == Yes
+
+predicate: polyphagia : 2 : 3
+polyphagia == No
+polyphagia == Yes
+
+predicate: polyuria : 2 : 3
+polyuria == No
+polyuria == Yes
+
+predicate: sudden_weight_loss : 2 : 3
+sudden_weight_loss == No
+sudden_weight_loss == Yes
+
+predicate: visual_blurring : 2 : 3
+visual_blurring == No
+visual_blurring == Yes
+
+predicate: weakness : 2 : 3
+weakness == No
+weakness == Yes
+
