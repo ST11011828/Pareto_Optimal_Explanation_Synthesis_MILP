@@ -11,6 +11,13 @@ def num_buckets(pred_id):
 def return_weight(pred_id):
     return int(predicates[pred_id]["weight"])
 
+def return_max_weight():
+    max_weight =0
+    for p in predicates:
+        if return_weight(p) > max_weight:
+            max_weight = return_weight(p)
+    return 2*max_weight
+
 def func(sample_id, pred_id , bucket_id = -1):    
     global df
     sample = df.iloc[sample_id]
