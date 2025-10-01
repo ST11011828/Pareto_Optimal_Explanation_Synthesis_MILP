@@ -2,7 +2,8 @@ import pandas as pd
 predicates = {}
 pred_id =0
 line_num = 0
-parent_dir = input('Input parent directory: ')
+# parent_dir = input('Input parent directory: ')
+parent_dir = 'examples/AutoTaxi'
 df = pd.read_csv(f"{parent_dir}/samples.csv", skipinitialspace=True)
 
 def num_buckets(pred_id):

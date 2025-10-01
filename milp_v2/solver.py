@@ -4,13 +4,16 @@ from encoding import node_order,tree_constraints, sample_constraints, reachabili
 from helper_functions import read_features,num_buckets, df
 from visualize_tree_levels import visualize_tree_levels
 
-def model_solver():
+
+def model_solver(I, C):
+    I = range(I)
+    C = range(C)
     model = gp.Model("pareto_optimal_explanations")
-    I = range(int(input("Enter the number of nodes:")))
+    # I = range(int(input("Enter the number of nodes:")))
     read_features()
     from helper_functions import pred_id
     P = range(pred_id)
-    C = range(int(input("Enter the maximum number of buckets you want:")))
+    # C = range(int(input("Enter the maximum number of buckets you want:")))
     S = range(len(df))
     labels = df["label"].unique()
     L = {f"L{i}" : label for i,label in enumerate(labels)}
