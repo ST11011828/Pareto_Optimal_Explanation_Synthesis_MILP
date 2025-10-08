@@ -1,12 +1,15 @@
 import sys
 import time
 from plot_pareto_curve import find_new_pareto_points
+import os
 
 C = 6
-I = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,20]
-
+I = [1,2,3,4,5,6]
+log_dir = "examples/wine/lam_and_tau_integer_for_not_divisible_by_5_integer/combined_runs_logs"
+os.makedirs(log_dir, exist_ok=True)
 for i in I:
-    log_file = f'examples/AutoTaxi/combined_runs_logs_ilp/I{i}_C{C}.log'
+     
+    log_file = f'examples/wine/lam_and_tau_integer_for_not_divisible_by_5_integer/combined_runs_logs/I{i}_C{C}.log'
     with open(log_file, 'w') as f:
         sys.stdout = f
         start_time = time.time()

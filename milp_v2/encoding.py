@@ -83,5 +83,5 @@ def reachability_constraints(model, lam, tau, u , z_u , I , C , P , o_u , L):
     model.addConstr(gp.quicksum( 1- u[i] for i in I) + gp.quicksum(return_weight(p)*o_u[i,p] for i in I for p in P)<=MAX_EXPLANATION)
 
 def objective(model, u , o_u , m , I , P , S):
-    model.setObjective((return_max_weight() * gp.quicksum( 1- u[i] for i in I) + gp.quicksum(return_weight(p)*o_u[i,p] for i in I for p in P) + gp.quicksum(m[0,s] for s in S)/len(S)), GRB.MAXIMIZE)
+    model.setObjective((gp.quicksum( 1- u[i] for i in I) + gp.quicksum(return_weight(p)*o_u[i,p] for i in I for p in P) + gp.quicksum(m[0,s] for s in S)), GRB.MAXIMIZE)
 

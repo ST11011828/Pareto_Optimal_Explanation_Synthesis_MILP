@@ -1,0 +1,7 @@
+#The following logic has been used:-
+#tau0 = model.addVars(((i,c,j) for i in I if i%4 != 0 for c in C for j in list(I)+list(L.keys()) if node_order(j) > i),
+#                        vtype=GRB.INTEGER, lb=0.0, ub=1.0, name="tau")
+
+    # INTEGER tau for i > 0
+#tau_rest = model.addVars(((i,c,j) for i in I if i %4 == 0 for c in C for j in list(I)+list(L.keys()) if node_order(j) > i),
+#                            vtype=GRB.CONTINUOUS, name="tau")

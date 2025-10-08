@@ -1,0 +1,829 @@
+I AM STARTING --------------------
+[]
+NOW I AM GOING TO SOLVE THE MODEL FOR FIRST SOLUTION
+Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
+Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
+
+Optimize a model with 72073 rows, 17289 columns and 219390 nonzeros
+Model fingerprint: 0xd6fa4a52
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 3e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+03]
+Presolve removed 50099 rows and 11350 columns
+Presolve time: 0.05s
+Presolved: 21974 rows, 5939 columns, 65563 nonzeros
+
+Concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Ordering time: 0.02s
+
+Barrier statistics:
+ Free vars  : 162
+ AA' NZ     : 4.036e+04
+ Factor NZ  : 1.049e+05 (roughly 10 MB of memory)
+ Factor Ops : 3.547e+06 (less than 1 second per iteration)
+ Threads    : 30
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0   4.52847892e+04  2.00000000e+00  7.93e+02 1.00e+00  3.64e+00     0s
+   1   2.30922537e+04  6.67825643e+01  2.44e+02 4.46e-01  1.52e+00     0s
+   2   5.66630238e+03  1.00757247e+02  1.13e+01 1.29e-01  3.18e-01     0s
+   3   8.44153255e+02  1.52828919e+02  3.45e-01 4.91e-03  3.01e-02     0s
+   4   2.11822130e+02  1.80108483e+02  9.65e-03 4.13e-04  1.35e-03     0s
+   5   1.99052213e+02  1.83554120e+02  4.52e-03 1.92e-04  6.60e-04     0s
+   6   1.93750208e+02  1.84489752e+02  2.39e-03 1.44e-04  3.95e-04     0s
+   7   1.90135812e+02  1.85122545e+02  7.13e-04 1.15e-04  2.15e-04     0s
+   8   1.88823952e+02  1.87306287e+02  2.00e-04 2.15e-05  6.47e-05     0s
+   9   1.88137685e+02  1.87800072e+02  2.81e-05 6.26e-06  1.44e-05     0s
+  10   1.88011848e+02  1.87968615e+02  1.71e-06 9.21e-07  1.85e-06     0s
+  11   1.88000567e+02  1.87999767e+02  4.83e-07 5.97e-09  3.40e-08     0s
+  12   1.88000001e+02  1.88000000e+02  4.71e-09 1.11e-11  3.40e-11     0s
+
+Barrier solved model in 12 iterations and 0.24 seconds (0.21 work units)
+Optimal objective 1.88000001e+02
+
+Crossover log...
+
+    1419 DPushes remaining with DInf 0.0000000e+00                 0s
+       0 DPushes remaining with DInf 0.0000000e+00                 0s
+
+    2702 PPushes remaining with PInf 0.0000000e+00                 0s
+       0 PPushes remaining with PInf 0.0000000e+00                 0s
+
+  Push phase complete: Pinf 0.0000000e+00, Dinf 0.0000000e+00      0s
+
+
+Solved with barrier
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+    3817    1.8800000e+02   0.000000e+00   0.000000e+00      0s
+
+Use crossover to convert LP symmetric solution to basic solution...
+Crossover log...
+
+       0 DPushes remaining with DInf 0.0000000e+00                 0s
+
+    1451 PPushes remaining with PInf 0.0000000e+00                 0s
+       0 PPushes remaining with PInf 0.0000000e+00                 0s
+
+  Push phase complete: Pinf 0.0000000e+00, Dinf 7.1054274e-15      0s
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+    5286    1.8800000e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 5286 iterations and 0.31 seconds (0.26 work units)
+Optimal objective  1.880000000e+02
+Objective value: 188.0
+lam[0,0] = 0.0
+lam[0,1] = 0.0
+lam[0,2] = 0.625
+lam[0,3] = 0.0
+lam[0,4] = 0.0
+lam[0,5] = 0.375
+lam[0,6] = 0.0
+lam[0,7] = 0.0
+lam[0,8] = 0.0
+lam[1,0] = 0.0
+lam[1,1] = 0.0
+lam[1,2] = 0.5
+lam[1,3] = 0.0
+lam[1,4] = 0.0
+lam[1,5] = 0.5
+lam[1,6] = 0.0
+lam[1,7] = 0.0
+lam[1,8] = 0.0
+lam[2,0] = 0.0
+lam[2,1] = 0.0
+lam[2,2] = 0.5
+lam[2,3] = 0.0
+lam[2,4] = 0.0
+lam[2,5] = 0.5
+lam[2,6] = 0.0
+lam[2,7] = 0.0
+lam[2,8] = 0.0
+tau[0,0,1] = 0.375
+tau[0,0,2] = 0.5
+tau[0,0,L0] = 0.0
+tau[0,0,L1] = 0.125
+tau[0,0,L2] = 0.125
+tau[0,1,1] = 0.375
+tau[0,1,2] = 0.375
+tau[0,1,L0] = 0.0
+tau[0,1,L1] = 0.25
+tau[0,1,L2] = 0.375
+tau[0,2,1] = 0.5
+tau[0,2,2] = 0.375
+tau[0,2,L0] = 0.0
+tau[0,2,L1] = 0.125
+tau[0,2,L2] = 0.0
+tau[0,3,1] = 0.375
+tau[0,3,2] = 0.375
+tau[0,3,L0] = 0.25
+tau[0,3,L1] = 0.0
+tau[0,3,L2] = 0.0
+tau[0,4,1] = 0.375
+tau[0,4,2] = 0.25
+tau[0,4,L0] = 0.0
+tau[0,4,L1] = 0.0
+tau[0,4,L2] = 0.0
+tau[0,5,1] = 0.375
+tau[0,5,2] = 0.25
+tau[0,5,L0] = 0.0
+tau[0,5,L1] = 0.0
+tau[0,5,L2] = 0.0
+tau[1,0,2] = 0.5
+tau[1,0,L0] = 0.0
+tau[1,0,L1] = 0.25
+tau[1,0,L2] = 0.25
+tau[1,1,2] = 0.5
+tau[1,1,L0] = 0.0
+tau[1,1,L1] = 0.25
+tau[1,1,L2] = 0.0
+tau[1,2,2] = 0.375
+tau[1,2,L0] = 0.125
+tau[1,2,L1] = 0.5
+tau[1,2,L2] = 0.0
+tau[1,3,2] = 0.5
+tau[1,3,L0] = 0.375
+tau[1,3,L1] = 0.125
+tau[1,3,L2] = 0.0
+tau[1,4,2] = 0.375
+tau[1,4,L0] = 0.125
+tau[1,4,L1] = 0.0
+tau[1,4,L2] = 0.0
+tau[1,5,2] = 0.375
+tau[1,5,L0] = 0.125
+tau[1,5,L1] = 0.0
+tau[1,5,L2] = 0.0
+tau[2,0,L0] = 0.0
+tau[2,0,L1] = 0.5
+tau[2,0,L2] = 0.5
+tau[2,1,L0] = 0.0
+tau[2,1,L1] = 0.5
+tau[2,1,L2] = 0.375
+tau[2,2,L0] = 0.5
+tau[2,2,L1] = 0.5
+tau[2,2,L2] = 0.0
+tau[2,3,L0] = 0.5
+tau[2,3,L1] = 0.5
+tau[2,3,L2] = 0.0
+tau[2,4,L0] = 0.5
+tau[2,4,L1] = 0.0
+tau[2,4,L2] = 0.0
+tau[2,5,L0] = 0.5
+tau[2,5,L1] = 0.0
+tau[2,5,L2] = 0.0
+m[0,0] = 1.0
+m[0,1] = 1.0
+m[0,2] = 1.0
+m[0,3] = 1.0
+m[0,4] = 1.0
+m[0,5] = 1.0
+m[0,6] = 1.0
+m[0,7] = 1.0
+m[0,8] = 1.0
+m[0,9] = 1.0
+m[0,10] = 1.0
+m[0,11] = 1.0
+m[0,12] = 1.0
+m[0,13] = 1.0
+m[0,14] = 1.0
+m[0,15] = 1.0
+m[0,16] = 1.0
+m[0,17] = 1.0
+m[0,18] = 1.0
+m[0,19] = 1.0
+m[0,20] = 1.0
+m[0,21] = 1.0
+m[0,22] = 1.0
+m[0,23] = 1.0
+m[0,24] = 1.0
+m[0,25] = 1.0
+m[0,26] = 1.0
+m[0,27] = 1.0
+m[0,28] = 1.0
+m[0,29] = 1.0
+m[0,30] = 1.0
+m[0,31] = 1.0
+m[0,32] = 1.0
+m[0,33] = 1.0
+m[0,34] = 1.0
+m[0,35] = 1.0
+m[0,36] = 1.0
+m[0,37] = 1.0
+m[0,38] = 1.0
+m[0,39] = 1.0
+m[0,40] = 1.0
+m[0,41] = 1.0
+m[0,42] = 1.0
+m[0,43] = 1.0
+m[0,44] = 1.0
+m[0,45] = 1.0
+m[0,46] = 1.0
+m[0,47] = 1.0
+m[0,48] = 1.0
+m[0,49] = 1.0
+m[0,50] = 1.0
+m[0,51] = 1.0
+m[0,52] = 1.0
+m[0,53] = 1.0
+m[0,54] = 1.0
+m[0,55] = 1.0
+m[0,56] = 1.0
+m[0,57] = 1.0
+m[0,58] = 1.0
+m[0,59] = 1.0
+m[0,60] = 1.0
+m[0,61] = 1.0
+m[0,62] = 1.0
+m[0,63] = 1.0
+m[0,64] = 1.0
+m[0,65] = 1.0
+m[0,66] = 1.0
+m[0,67] = 1.0
+m[0,68] = 1.0
+m[0,69] = 1.0
+m[0,70] = 1.0
+m[0,71] = 1.0
+m[0,72] = 1.0
+m[0,73] = 1.0
+m[0,74] = 1.0
+m[0,75] = 1.0
+m[0,76] = 1.0
+m[0,77] = 1.0
+m[0,78] = 1.0
+m[0,79] = 1.0
+m[0,80] = 1.0
+m[0,81] = 1.0
+m[0,82] = 1.0
+m[0,83] = 1.0
+m[0,84] = 1.0
+m[0,85] = 1.0
+m[0,86] = 1.0
+m[0,87] = 1.0
+m[0,88] = 1.0
+m[0,89] = 1.0
+m[0,90] = 1.0
+m[0,91] = 1.0
+m[0,92] = 1.0
+m[0,93] = 1.0
+m[0,94] = 1.0
+m[0,95] = 1.0
+m[0,96] = 1.0
+m[0,97] = 1.0
+m[0,98] = 1.0
+m[0,99] = 1.0
+m[0,100] = 1.0
+m[0,101] = 1.0
+m[0,102] = 1.0
+m[0,103] = 1.0
+m[0,104] = 1.0
+m[0,105] = 1.0
+m[0,106] = 1.0
+m[0,107] = 1.0
+m[0,108] = 1.0
+m[0,109] = 1.0
+m[0,110] = 1.0
+m[0,111] = 1.0
+m[0,112] = 1.0
+m[0,113] = 1.0
+m[0,114] = 1.0
+m[0,115] = 1.0
+m[0,116] = 1.0
+m[0,117] = 1.0
+m[0,118] = 1.0
+m[0,119] = 1.0
+m[0,120] = 1.0
+m[0,121] = 1.0
+m[0,122] = 1.0
+m[0,123] = 1.0
+m[0,124] = 1.0
+m[0,125] = 1.0
+m[0,126] = 1.0
+m[0,127] = 1.0
+m[0,128] = 1.0
+m[0,129] = 1.0
+m[0,130] = 1.0
+m[0,131] = 1.0
+m[0,132] = 1.0
+m[0,133] = 1.0
+m[0,134] = 1.0
+m[0,135] = 1.0
+m[0,136] = 1.0
+m[0,137] = 1.0
+m[0,138] = 1.0
+m[0,139] = 1.0
+m[0,140] = 1.0
+m[0,141] = 1.0
+m[0,142] = 1.0
+m[0,143] = 1.0
+m[0,144] = 1.0
+m[0,145] = 1.0
+m[0,146] = 1.0
+m[0,147] = 1.0
+m[0,148] = 1.0
+m[0,149] = 1.0
+m[0,150] = 1.0
+m[0,151] = 1.0
+m[0,152] = 1.0
+m[0,153] = 1.0
+m[0,154] = 1.0
+m[0,155] = 1.0
+m[0,156] = 1.0
+m[0,157] = 1.0
+m[0,158] = 1.0
+m[0,159] = 1.0
+m[0,160] = 1.0
+m[0,161] = 1.0
+m[0,162] = 1.0
+m[0,163] = 1.0
+m[0,164] = 1.0
+m[0,165] = 1.0
+m[0,166] = 1.0
+m[0,167] = 1.0
+m[0,168] = 1.0
+m[0,169] = 1.0
+m[0,170] = 1.0
+m[0,171] = 1.0
+m[0,172] = 1.0
+m[0,173] = 1.0
+m[0,174] = 1.0
+m[0,175] = 1.0
+m[0,176] = 1.0
+m[0,177] = 1.0
+u[0] = 1.0
+u[1] = 0.5
+u[2] = 0.5
+o_u[0,0] = 0.0
+o_u[0,1] = 0.0
+o_u[0,2] = 0.625
+o_u[0,3] = 0.0
+o_u[0,4] = 0.0
+o_u[0,5] = 0.375
+o_u[0,6] = 0.0
+o_u[0,7] = 0.0
+o_u[0,8] = 0.0
+o_u[1,0] = 0.0
+o_u[1,1] = 0.0
+o_u[1,2] = 0.5
+o_u[1,3] = 0.0
+o_u[1,4] = 0.0
+o_u[1,5] = 0.5
+o_u[1,6] = 0.0
+o_u[1,7] = 0.0
+o_u[1,8] = 0.0
+o_u[2,0] = 0.0
+o_u[2,1] = 0.0
+o_u[2,2] = 0.5
+o_u[2,3] = 0.0
+o_u[2,4] = 0.0
+o_u[2,5] = 0.5
+o_u[2,6] = 0.0
+o_u[2,7] = 0.0
+o_u[2,8] = 0.0
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+Saved hierarchical tree visualization to milp_tree_levels.png
+[]
+Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
+Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
+
+Optimize a model with 72073 rows, 17289 columns and 219390 nonzeros
+Model fingerprint: 0xd6fa4a52
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 3e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+03]
+Presolve removed 50099 rows and 11350 columns
+Presolve time: 0.08s
+Presolved: 21974 rows, 5939 columns, 65563 nonzeros
+
+Concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Ordering time: 0.02s
+
+Barrier statistics:
+ Free vars  : 162
+ AA' NZ     : 4.036e+04
+ Factor NZ  : 1.049e+05 (roughly 10 MB of memory)
+ Factor Ops : 3.547e+06 (less than 1 second per iteration)
+ Threads    : 30
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0   4.52847892e+04  2.00000000e+00  7.93e+02 1.00e+00  3.64e+00     0s
+   1   2.30922537e+04  6.67825643e+01  2.44e+02 4.46e-01  1.52e+00     0s
+   2   5.66630238e+03  1.00757247e+02  1.13e+01 1.29e-01  3.18e-01     0s
+   3   8.44153255e+02  1.52828919e+02  3.45e-01 4.91e-03  3.01e-02     0s
+   4   2.11822130e+02  1.80108483e+02  9.65e-03 4.13e-04  1.35e-03     0s
+   5   1.99052213e+02  1.83554120e+02  4.52e-03 1.92e-04  6.60e-04     0s
+   6   1.93750208e+02  1.84489752e+02  2.39e-03 1.44e-04  3.95e-04     0s
+   7   1.90135812e+02  1.85122545e+02  7.13e-04 1.15e-04  2.15e-04     0s
+   8   1.88823952e+02  1.87306287e+02  2.00e-04 2.15e-05  6.47e-05     0s
+   9   1.88137685e+02  1.87800072e+02  2.81e-05 6.26e-06  1.44e-05     0s
+  10   1.88011848e+02  1.87968615e+02  1.71e-06 9.21e-07  1.85e-06     0s
+  11   1.88000567e+02  1.87999767e+02  4.83e-07 5.97e-09  3.40e-08     0s
+  12   1.88000001e+02  1.88000000e+02  4.71e-09 1.11e-11  3.40e-11     0s
+
+Barrier solved model in 12 iterations and 0.27 seconds (0.21 work units)
+Optimal objective 1.88000001e+02
+
+Crossover log...
+
+    1419 DPushes remaining with DInf 0.0000000e+00                 0s
+       0 DPushes remaining with DInf 0.0000000e+00                 0s
+
+    2702 PPushes remaining with PInf 0.0000000e+00                 0s
+       0 PPushes remaining with PInf 0.0000000e+00                 0s
+
+  Push phase complete: Pinf 0.0000000e+00, Dinf 0.0000000e+00      0s
+
+
+Solved with barrier
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+    3817    1.8800000e+02   0.000000e+00   0.000000e+00      0s
+
+Use crossover to convert LP symmetric solution to basic solution...
+Crossover log...
+
+       0 DPushes remaining with DInf 0.0000000e+00                 0s
+
+    1451 PPushes remaining with PInf 0.0000000e+00                 0s
+       0 PPushes remaining with PInf 0.0000000e+00                 0s
+
+  Push phase complete: Pinf 0.0000000e+00, Dinf 7.1054274e-15      0s
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+    5286    1.8800000e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 5286 iterations and 0.36 seconds (0.26 work units)
+Optimal objective  1.880000000e+02
+Objective value: 188.0
+lam[0,0] = 0.0
+lam[0,1] = 0.0
+lam[0,2] = 0.625
+lam[0,3] = 0.0
+lam[0,4] = 0.0
+lam[0,5] = 0.375
+lam[0,6] = 0.0
+lam[0,7] = 0.0
+lam[0,8] = 0.0
+lam[1,0] = 0.0
+lam[1,1] = 0.0
+lam[1,2] = 0.5
+lam[1,3] = 0.0
+lam[1,4] = 0.0
+lam[1,5] = 0.5
+lam[1,6] = 0.0
+lam[1,7] = 0.0
+lam[1,8] = 0.0
+lam[2,0] = 0.0
+lam[2,1] = 0.0
+lam[2,2] = 0.5
+lam[2,3] = 0.0
+lam[2,4] = 0.0
+lam[2,5] = 0.5
+lam[2,6] = 0.0
+lam[2,7] = 0.0
+lam[2,8] = 0.0
+tau[0,0,1] = 0.375
+tau[0,0,2] = 0.5
+tau[0,0,L0] = 0.0
+tau[0,0,L1] = 0.125
+tau[0,0,L2] = 0.125
+tau[0,1,1] = 0.375
+tau[0,1,2] = 0.375
+tau[0,1,L0] = 0.0
+tau[0,1,L1] = 0.25
+tau[0,1,L2] = 0.375
+tau[0,2,1] = 0.5
+tau[0,2,2] = 0.375
+tau[0,2,L0] = 0.0
+tau[0,2,L1] = 0.125
+tau[0,2,L2] = 0.0
+tau[0,3,1] = 0.375
+tau[0,3,2] = 0.375
+tau[0,3,L0] = 0.25
+tau[0,3,L1] = 0.0
+tau[0,3,L2] = 0.0
+tau[0,4,1] = 0.375
+tau[0,4,2] = 0.25
+tau[0,4,L0] = 0.0
+tau[0,4,L1] = 0.0
+tau[0,4,L2] = 0.0
+tau[0,5,1] = 0.375
+tau[0,5,2] = 0.25
+tau[0,5,L0] = 0.0
+tau[0,5,L1] = 0.0
+tau[0,5,L2] = 0.0
+tau[1,0,2] = 0.5
+tau[1,0,L0] = 0.0
+tau[1,0,L1] = 0.25
+tau[1,0,L2] = 0.25
+tau[1,1,2] = 0.5
+tau[1,1,L0] = 0.0
+tau[1,1,L1] = 0.25
+tau[1,1,L2] = 0.0
+tau[1,2,2] = 0.375
+tau[1,2,L0] = 0.125
+tau[1,2,L1] = 0.5
+tau[1,2,L2] = 0.0
+tau[1,3,2] = 0.5
+tau[1,3,L0] = 0.375
+tau[1,3,L1] = 0.125
+tau[1,3,L2] = 0.0
+tau[1,4,2] = 0.375
+tau[1,4,L0] = 0.125
+tau[1,4,L1] = 0.0
+tau[1,4,L2] = 0.0
+tau[1,5,2] = 0.375
+tau[1,5,L0] = 0.125
+tau[1,5,L1] = 0.0
+tau[1,5,L2] = 0.0
+tau[2,0,L0] = 0.0
+tau[2,0,L1] = 0.5
+tau[2,0,L2] = 0.5
+tau[2,1,L0] = 0.0
+tau[2,1,L1] = 0.5
+tau[2,1,L2] = 0.375
+tau[2,2,L0] = 0.5
+tau[2,2,L1] = 0.5
+tau[2,2,L2] = 0.0
+tau[2,3,L0] = 0.5
+tau[2,3,L1] = 0.5
+tau[2,3,L2] = 0.0
+tau[2,4,L0] = 0.5
+tau[2,4,L1] = 0.0
+tau[2,4,L2] = 0.0
+tau[2,5,L0] = 0.5
+tau[2,5,L1] = 0.0
+tau[2,5,L2] = 0.0
+m[0,0] = 1.0
+m[0,1] = 1.0
+m[0,2] = 1.0
+m[0,3] = 1.0
+m[0,4] = 1.0
+m[0,5] = 1.0
+m[0,6] = 1.0
+m[0,7] = 1.0
+m[0,8] = 1.0
+m[0,9] = 1.0
+m[0,10] = 1.0
+m[0,11] = 1.0
+m[0,12] = 1.0
+m[0,13] = 1.0
+m[0,14] = 1.0
+m[0,15] = 1.0
+m[0,16] = 1.0
+m[0,17] = 1.0
+m[0,18] = 1.0
+m[0,19] = 1.0
+m[0,20] = 1.0
+m[0,21] = 1.0
+m[0,22] = 1.0
+m[0,23] = 1.0
+m[0,24] = 1.0
+m[0,25] = 1.0
+m[0,26] = 1.0
+m[0,27] = 1.0
+m[0,28] = 1.0
+m[0,29] = 1.0
+m[0,30] = 1.0
+m[0,31] = 1.0
+m[0,32] = 1.0
+m[0,33] = 1.0
+m[0,34] = 1.0
+m[0,35] = 1.0
+m[0,36] = 1.0
+m[0,37] = 1.0
+m[0,38] = 1.0
+m[0,39] = 1.0
+m[0,40] = 1.0
+m[0,41] = 1.0
+m[0,42] = 1.0
+m[0,43] = 1.0
+m[0,44] = 1.0
+m[0,45] = 1.0
+m[0,46] = 1.0
+m[0,47] = 1.0
+m[0,48] = 1.0
+m[0,49] = 1.0
+m[0,50] = 1.0
+m[0,51] = 1.0
+m[0,52] = 1.0
+m[0,53] = 1.0
+m[0,54] = 1.0
+m[0,55] = 1.0
+m[0,56] = 1.0
+m[0,57] = 1.0
+m[0,58] = 1.0
+m[0,59] = 1.0
+m[0,60] = 1.0
+m[0,61] = 1.0
+m[0,62] = 1.0
+m[0,63] = 1.0
+m[0,64] = 1.0
+m[0,65] = 1.0
+m[0,66] = 1.0
+m[0,67] = 1.0
+m[0,68] = 1.0
+m[0,69] = 1.0
+m[0,70] = 1.0
+m[0,71] = 1.0
+m[0,72] = 1.0
+m[0,73] = 1.0
+m[0,74] = 1.0
+m[0,75] = 1.0
+m[0,76] = 1.0
+m[0,77] = 1.0
+m[0,78] = 1.0
+m[0,79] = 1.0
+m[0,80] = 1.0
+m[0,81] = 1.0
+m[0,82] = 1.0
+m[0,83] = 1.0
+m[0,84] = 1.0
+m[0,85] = 1.0
+m[0,86] = 1.0
+m[0,87] = 1.0
+m[0,88] = 1.0
+m[0,89] = 1.0
+m[0,90] = 1.0
+m[0,91] = 1.0
+m[0,92] = 1.0
+m[0,93] = 1.0
+m[0,94] = 1.0
+m[0,95] = 1.0
+m[0,96] = 1.0
+m[0,97] = 1.0
+m[0,98] = 1.0
+m[0,99] = 1.0
+m[0,100] = 1.0
+m[0,101] = 1.0
+m[0,102] = 1.0
+m[0,103] = 1.0
+m[0,104] = 1.0
+m[0,105] = 1.0
+m[0,106] = 1.0
+m[0,107] = 1.0
+m[0,108] = 1.0
+m[0,109] = 1.0
+m[0,110] = 1.0
+m[0,111] = 1.0
+m[0,112] = 1.0
+m[0,113] = 1.0
+m[0,114] = 1.0
+m[0,115] = 1.0
+m[0,116] = 1.0
+m[0,117] = 1.0
+m[0,118] = 1.0
+m[0,119] = 1.0
+m[0,120] = 1.0
+m[0,121] = 1.0
+m[0,122] = 1.0
+m[0,123] = 1.0
+m[0,124] = 1.0
+m[0,125] = 1.0
+m[0,126] = 1.0
+m[0,127] = 1.0
+m[0,128] = 1.0
+m[0,129] = 1.0
+m[0,130] = 1.0
+m[0,131] = 1.0
+m[0,132] = 1.0
+m[0,133] = 1.0
+m[0,134] = 1.0
+m[0,135] = 1.0
+m[0,136] = 1.0
+m[0,137] = 1.0
+m[0,138] = 1.0
+m[0,139] = 1.0
+m[0,140] = 1.0
+m[0,141] = 1.0
+m[0,142] = 1.0
+m[0,143] = 1.0
+m[0,144] = 1.0
+m[0,145] = 1.0
+m[0,146] = 1.0
+m[0,147] = 1.0
+m[0,148] = 1.0
+m[0,149] = 1.0
+m[0,150] = 1.0
+m[0,151] = 1.0
+m[0,152] = 1.0
+m[0,153] = 1.0
+m[0,154] = 1.0
+m[0,155] = 1.0
+m[0,156] = 1.0
+m[0,157] = 1.0
+m[0,158] = 1.0
+m[0,159] = 1.0
+m[0,160] = 1.0
+m[0,161] = 1.0
+m[0,162] = 1.0
+m[0,163] = 1.0
+m[0,164] = 1.0
+m[0,165] = 1.0
+m[0,166] = 1.0
+m[0,167] = 1.0
+m[0,168] = 1.0
+m[0,169] = 1.0
+m[0,170] = 1.0
+m[0,171] = 1.0
+m[0,172] = 1.0
+m[0,173] = 1.0
+m[0,174] = 1.0
+m[0,175] = 1.0
+m[0,176] = 1.0
+m[0,177] = 1.0
+u[0] = 1.0
+u[1] = 0.5
+u[2] = 0.5
+o_u[0,0] = 0.0
+o_u[0,1] = 0.0
+o_u[0,2] = 0.625
+o_u[0,3] = 0.0
+o_u[0,4] = 0.0
+o_u[0,5] = 0.375
+o_u[0,6] = 0.0
+o_u[0,7] = 0.0
+o_u[0,8] = 0.0
+o_u[1,0] = 0.0
+o_u[1,1] = 0.0
+o_u[1,2] = 0.5
+o_u[1,3] = 0.0
+o_u[1,4] = 0.0
+o_u[1,5] = 0.5
+o_u[1,6] = 0.0
+o_u[1,7] = 0.0
+o_u[1,8] = 0.0
+o_u[2,0] = 0.0
+o_u[2,1] = 0.0
+o_u[2,2] = 0.5
+o_u[2,3] = 0.0
+o_u[2,4] = 0.0
+o_u[2,5] = 0.5
+o_u[2,6] = 0.0
+o_u[2,7] = 0.0
+o_u[2,8] = 0.0
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+Saved hierarchical tree visualization to milp_tree_levels.png
+THIS IS THE INITIAL CORRECTNESS 1.0
+THIS IS THE INITIAL EXPLAINABILITY 10.0
+Inside find_pareto_solution_more_e
+----------------------------------
+THE CURRENT CORRECTNESS IS: 1.0, AND THE CURRENT EXPLAINABILITY IS: 10.0
+Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
+Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
+
+Optimize a model with 72075 rows, 17289 columns and 219598 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 3e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+03]
+LP warm-start: use basis
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    1.8800000e+02   1.250000e+00   0.000000e+00      0s
+
+Solved in 4 iterations and 0.03 seconds (0.02 work units)
+Infeasible model
+[INFO] Model became infeasible under the new cuts.
+End of find_pareto_solution_more_e 2 @@@@@@@@@@@
+Inside find_pareto_solution_more_c
+Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
+Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
+
+Optimize a model with 72075 rows, 17289 columns and 219598 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+00]
+  Objective range  [1e+00, 3e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+03]
+LP warm-start: use basis
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    1.8800000e+02   1.250000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.02 seconds (0.01 work units)
+Infeasible model
+[INFO] Model became infeasible under the new cuts.
+End of find_pareto_solution_more_c 1 |||||||||||||||||
+App ending 3....................... c = 1.0 , e = 10.0
+
+ Total time taken: 15.418278217315674 seconds

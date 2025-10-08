@@ -3,8 +3,15 @@ predicates = {}
 pred_id =0
 line_num = 0
 # parent_dir = input('Input parent directory: ')
-parent_dir = 'examples/AutoTaxi'
+parent_dir = 'examples/wine'
 df = pd.read_csv(f"{parent_dir}/samples.csv", skipinitialspace=True)
+
+def _reset_state():
+    """Clear all module-level state so repeated runs don't accumulate."""
+    global predicates, pred_id, line_num
+    predicates.clear()
+    pred_id = 0
+    line_num = 0
 
 def num_buckets(pred_id):
     return int(predicates[pred_id]["num_buckets"])
@@ -46,6 +53,7 @@ def read_samples():
     Y = df[df.columns[-1]]
 
 def read_features():
+    _reset_state()
     global pred_id
     global line_num
     global df
@@ -88,6 +96,7 @@ def calculate_explainability(solution):
     u = solution["u"]
     o_u = solution["o_u"]
 
+    # return return_max_weight()*sum(1 - u[i].X for i in I)+ sum(return_weight(p)*o_u[i,p].X for i in I for p in P)
     return sum(1 - u[i].X for i in I)+ sum(return_weight(p)*o_u[i,p].X for i in I for p in P)
 
 def calculate_correctness(solution):
