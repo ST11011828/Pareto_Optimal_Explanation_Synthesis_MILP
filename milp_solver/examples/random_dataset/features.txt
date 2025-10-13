@@ -1,0 +1,15 @@
+yo5 = yo3*yo4
+
+predicate: yo1 : 2 : 3
+yo1 <=2
+yo1 > 2
+
+predicate: yo2 : 3 : 2
+yo2 < 0
+0 <= yo2 < 62
+yo2 >= 62
+
+predicate: yo5 : 2 : 1
+yo5 >= 40
+yo5 < 40
+
