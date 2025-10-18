@@ -9,6 +9,7 @@ Finds out the entire set of pareto-optimal solutions for a set of given samples 
 
 - **inputs.py** : process everything about inputs ( samples , features , maximum number of nodes)
 - **encoding.py** : processes the encoding + declaration of encoding variables
+- **pareto_points.py** : calculates the pareto-points using divide and conquer technique
 - **algorithms.py** : implements all the algorithms we have worked on so far and compares it with the original solution
 - **driver.py** : supplies all the required inputs 
 

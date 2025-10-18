@@ -17,7 +17,7 @@ class Samples:
     def __init__(self, samples_csv_path:str):
         # self.dir_path = samples_csv_path.replace("samples.csv","")
         self.dir_path = os.path.dirname(samples_csv_path)
-        df = pd.read_csv(samples_csv_path)
+        df = pd.read_csv(samples_csv_path, skipinitialspace=True)
         self.samples = df
         self.updated_samples = self.samples.copy()
         self.put_label_at_end()
@@ -78,6 +78,8 @@ class Input:
         self.predicates = []
         self.c_max = 0
         self.leaves = []
+        self.max_weight = 0
+        self.min_weight = 20000000000
         self.read_features()
         self.samples.put_label_at_end()
         self.calculate_c_max()
@@ -97,7 +99,7 @@ class Input:
     def calculate_leaves(self):
         df = self.samples.output
         # last_col = df.columns[-1]
-        self.leaves = sorted(df.astype(str).unique().tolist())
+        self.leaves = pd.unique(df).tolist()
 
     # def put_label_at_the_end(self):
     #     df = self.samples.updated_samples
@@ -110,6 +112,8 @@ class Input:
         # df = self.samples.updated_samples
         pred_id = 0
         current_pred = None
+        # max_weight = 0
+        # min_weight = 200000000000
 
         with open(os.path.join(self.filename, "features.txt"), "r") as f:
             lines = [line.strip() for line in f if line.strip()]
@@ -118,6 +122,10 @@ class Input:
             if line.startswith("predicate"):
                 # format: predicate: <name> : <num_buckets> : <weight>
                 _, pred_name, num_buckets, weight = [x.strip() for x in line.split(":")]
+                if int(weight) > self.max_weight:
+                    self.max_weight = int(weight)
+                if int(weight) < self.min_weight:
+                    self.min_weight = int(weight)
                 current_pred = Predicate(
                         name=pred_name,
                         pred_id=pred_id,

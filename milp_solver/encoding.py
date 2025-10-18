@@ -35,7 +35,8 @@ class Encoding:
         self.P = range(len(self.inp.predicates))
         self.S = range(len(self.inp.samples.updated_samples))
         self.L = {f"L{i}":label for i,label in enumerate(self.inp.leaves)}
-        
+        self._built = False
+
         self.model = gp.Model("pareto_points_exploration")
         lam_int = self.model.addVars(
             ((i,p) for i in self.I if i in self.int_pos for p in self.P) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "lam"
@@ -180,7 +181,16 @@ class Encoding:
             <= self.MAX_EXPLANATION
         )
 
-    def objective(self):
+    def _build_constraints(self):
+        if self._built:
+            return
+        self.tree_constraints()
+        self.sample_constraints()
+        self.reachability_constraints()
+        self._built = True
+
+    def solve(self):
+        self._build_constraints()
         self.model.setObjective(
             gp.quicksum(1 - self.u[i] for i in self.I) +
             gp.quicksum(self.inp.predicates[p].weight * self.o_u[i, p] for i in self.I for p in self.P) +
@@ -217,17 +227,19 @@ class Encoding:
     
     def calculate_correctness(self):
         return sum(self.m[self.root, s].X for s in self.S)*1.0/len(self.S)
+        # return sum(self.m[self.root, s].X for s in self.S)*1.0
+
 
 
     
 def main():
-    inp = Input("examples/random_dataset", max_nodes=6)
-    ints_pos = {0,1,2,3,4,5}             # make root’s lam and tau integral (add more indices if you like)
-    enc = Encoding(ints_pos, inp, root=1)
+    inp = Input("examples/wine", max_nodes=3)
+    ints_pos = {0,1,2}             # make root’s lam and tau integral (add more indices if you like)
+    enc = Encoding(ints_pos, inp, root=0)
     enc.tree_constraints()
     enc.sample_constraints()
     enc.reachability_constraints()
-    sol = enc.objective()
+    sol = enc.solve()
 
     print("Status:", sol["status"])
     print("Obj:", sol["obj"])
