@@ -253,11 +253,17 @@ class Pareto_Points:
                 print(f"Checking if e= {curr_expl} and c = {curr_correctness} is a pareto point or not")
                 if len(self.pareto_points) != 0:
                     if self.pareto_points[-1][0] > curr_correctness and self.pareto_points[-1][1] > curr_expl:
-                        print("CURRENT POINT IS NOT PARETO OPTIMAL")
+                        print("CURRENT POINT IS NOT PARETO OPTIMAL, THE PREVIOUS POINT HAS BOTH GREATER CORRECTNESS AND GREATER EXPL")
                     elif self.pareto_points[-1][0] < curr_correctness and self.pareto_points[-1][1] < curr_expl:
-                        print("The CURRENT POINT PARETO_DOMINATES THE PREVIOUS POINT, HENCE IT IS BEING REPLACED")
+                        print("The CURRENT POINT PARETO_DOMINATES THE PREVIOUS POINT, HENCE IT IS BEING REPLACED, BOTH EXPL AND CORR ARE MORE")
                         self.pareto_points[-1][0] = curr_correctness
                         self.pareto_points[-1][1] = curr_expl
+                    elif self.pareto_points[-1][0] == curr_correctness and self.pareto_points[-1][1] < curr_expl:
+                        print("PREV POINT HAS SAME CORR AND HIGHER EXPL, OVERWRITING THE NEW POINT")
+                        self.pareto_points[-1][1] = curr_expl
+                    elif self.pareto_points[-1][0] < curr_correctness and self.pareto_points[-1][1] == curr_expl:
+                        print("PREV POINT HAS GREATER CORR SAME EXPL, OVERWRITING.........")
+                        self.pareto_points[-1][0] = curr_correctness
                     else:
                         print("Adding NEW PARETO POINT")
                         self.pareto_points.append([curr_correctness, curr_expl])
@@ -267,6 +273,32 @@ class Pareto_Points:
             self.enc.model.remove(expl_constr)
             self.enc.model.update()
         print(self.pareto_points)
+        self.write_pareto_points()
+        self.plot_pareto_points()
+
+    def write_pareto_points(self):
+        out_dir = os.path.join(self.inp.filename, "results", "pareto_points")
+        os.makedirs(out_dir, exist_ok=True)
+        fn = f"pareto_points_I{self.inp.max_nodes}_C{self.inp.c_max}.csv"
+        with open(os.path.join(out_dir, fn), "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["c", "e"])
+            for c, e in self.pareto_points:
+                w.writerow([c, e])
+
+    def plot_pareto_points(self):
+        out_dir = os.path.join(self.inp.filename, "results", "pareto_curves")
+        os.makedirs(out_dir, exist_ok=True)
+        xs = [c for c, _ in self.pareto_points]
+        ys = [e for _, e in self.pareto_points]
+        plt.figure()
+        plt.plot(xs, ys, marker="o")
+        plt.xlabel("Correctness")
+        plt.ylabel("Explainability")
+        plt.tight_layout()
+        fn = f"pareto_curve_I{self.inp.max_nodes}_C{self.inp.c_max}.png"
+        plt.savefig(os.path.join(out_dir, fn), dpi=300, bbox_inches="tight")
+        plt.close()
 
 def main():
     pp = Pareto_Points("examples/wine",3,{0,1,2},0)

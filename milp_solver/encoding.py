@@ -38,16 +38,16 @@ class Encoding:
         self._built = False
 
         self.model = gp.Model("pareto_points_exploration")
-        lam_int = self.model.addVars(
-            ((i,p) for i in self.I if i in self.int_pos for p in self.P) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "lam"
-        )
-        lam_cont = self.model.addVars(
-            ((i,p) for i in self.I if i not in self.int_pos for p in self.P) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "lam"
-        )
-        self.lam = gp.tupledict()
-        self.lam.update(lam_int)
-        self.lam.update(lam_cont)
-
+        # lam_int = self.model.addVars(
+        #     ((i,p) for i in self.I if i in self.int_pos for p in self.P) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "lam"
+        # )
+        # lam_cont = self.model.addVars(
+        #     ((i,p) for i in self.I if i not in self.int_pos for p in self.P) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "lam"
+        # )
+        # self.lam = gp.tupledict()
+        # self.lam.update(lam_int)
+        # self.lam.update(lam_cont)
+        self.lam = self.model.addVars(((i,p) for i in self.I for p in self.P), vtype=GRB.INTEGER , lb=0.0 , ub = 1.0 , name="lam")
         all_nodes = list(self.I) + list(self.L.keys())
         tau_int = self.model.addVars(
             ((i,c,j) for i in self.I if i in self.int_pos
