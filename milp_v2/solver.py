@@ -5,10 +5,15 @@ from helper_functions import read_features,num_buckets, df
 from visualize_tree_levels import visualize_tree_levels
 
 
-def model_solver(I, C):
+# def model_solver(I, C ):
+
+def model_solver(I, C , int_lam_nodes=None, int_tau_sources=None):
     I = range(I)
     C = range(C)
+    int_lam_nodes = set(int_lam_nodes or [])
+    int_tau_sources = set(int_tau_sources or [])
     model = gp.Model("pareto_optimal_explanations")
+    model.setParam("IntFeasTol", 1e-9)
     # model.setParam("Threads", 40)  
     # I = range(int(input("Enter the number of nodes:")))
     read_features()
@@ -18,18 +23,33 @@ def model_solver(I, C):
     S = range(len(df))
     labels = df["label"].unique()
     L = {f"L{i}" : label for i,label in enumerate(labels)}
-    lam = model.addVars(I,P, vtype=GRB.INTEGER ,lb = 0.0, ub = 1.0, name = "lam")
-    # tau = model.addVars(((i,c,j) for i in I for c in C for j in list(I)+list(L.keys()) if node_order(j)>i), vtype=GRB.CONTINUOUS, lb=0.0 , ub = 1.0 , name ="tau")
-    # INTEGER tau for i = 0
-    tau0 = model.addVars(((i,c,j) for i in I if i%5 != 0 for c in C for j in list(I)+list(L.keys()) if node_order(j) > i),
-                        vtype=GRB.INTEGER, lb=0.0, ub=1.0, name="tau")
+    # lam = model.addVars(I,P, vtype=GRB.INTEGER ,lb = 0.0, ub = 1.0, name = "lam")
+    # tau = model.addVars(((i,c,j) for i in I for c in C for j in list(I)+list(L.keys()) if node_order(j)>i), vtype=GRB.INTEGER, lb=0.0 , ub = 1.0 , name ="tau")
+    # # INTEGER tau for i = 0
+    # tau0 = model.addVars(((i,c,j) for i in I if i%5 != 0 for c in C for j in list(I)+list(L.keys()) if node_order(j) > i),
+    #                     vtype=GRB.INTEGER, lb=0.0, ub=1.0, name="tau")
 
-    # INTEGER tau for i > 0
-    tau_rest = model.addVars(((i,c,j) for i in I if i %5 == 0 for c in C for j in list(I)+list(L.keys()) if node_order(j) > i),
-                            vtype=GRB.CONTINUOUS, name="tau")
+    # # INTEGER tau for i > 0
+    # tau_rest = model.addVars(((i,c,j) for i in I if i %5 == 0 for c in C for j in list(I)+list(L.keys()) if node_order(j) > i),
+    #                         vtype=GRB.INTEGER, name="tau")
+    # tau = gp.tupledict()
+    # tau.update(tau0)
+    # tau.update(tau_rest)
+        # ---- lam: integer only at requested nodes, continuous elsewhere ----
+    lam = gp.tupledict()
+    for i in I:
+        vtype = GRB.INTEGER if i in int_lam_nodes else GRB.CONTINUOUS
+        block = model.addVars([i], P, vtype=vtype, lb=0.0, ub=1.0, name="lam")
+        lam.update(block)
+
+    # ---- tau: integer only for requested sources i, continuous elsewhere ----
     tau = gp.tupledict()
-    tau.update(tau0)
-    tau.update(tau_rest)
+    for i in I:
+        vtype = GRB.INTEGER if i in int_tau_sources else GRB.CONTINUOUS
+        # only j with node_order(j) > i
+        idxs = ((i, c, j) for c in C for j in list(I)+list(L.keys()) if node_order(j) > i)
+        block = model.addVars(idxs, vtype=vtype, lb=0.0, ub=1.0, name="tau")
+        tau.update(block)
     tree_constraints(model,lam,tau,I,P,C,L,num_buckets)
     # lam0 = model.addVars([0], P, vtype=GRB.CONTINUOUS, lb=0.0, ub=1.0, name="lam")
 
@@ -57,11 +77,16 @@ def model_solver(I, C):
         print("Objective value:", model.objVal)
         for v in model.getVars():
             if (v.VarName.startswith("o_u") or v.VarName.startswith("u") or v.VarName.startswith("m[0") or v.VarName.startswith("lam") or v.VarName.startswith("tau")) :
-                print(f"{v.VarName} = {v.X}")       
+                val = v.X
+                # Round to nearest integer if close enough
+                if abs(val - round(val)) < 1e-4:
+                    val = round(val)
+                print(f"{v.VarName} = {val}")
+                # print(f"{v.VarName} = {v.X}")       
         print("------------------------------------------------------------------------")
-        # for v in model.getVars():
-        #     # if v.VarName.startswith("u") or v.VarName.startswith("o"):
-        #     print(f"{v.VarName} = {v.X}")
+        for v in model.getVars():
+            if v.X <1  and  v.X>0:
+                print(f"{v.VarName} = {v.X}")
         print("------------------------------------------------------------------------")
         visualize_tree_levels(lam, tau, I, P, L)
     return {

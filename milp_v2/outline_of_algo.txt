@@ -1,0 +1,3 @@
+1. Start with root integral and all lams integral
+Now what?
+2. Now go to the variables where the tau from the root takes you and do the same algoithm for those subtrees

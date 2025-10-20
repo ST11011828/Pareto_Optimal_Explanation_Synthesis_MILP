@@ -35,7 +35,18 @@ def find_pareto_solution_more_e(solution):
             print("Objective value:", model.objVal)
             for v in model.getVars():
                 if (v.VarName.startswith("o_u") or v.VarName.startswith("u") or v.VarName.startswith("m[0") or v.VarName.startswith("lam") or v.VarName.startswith("tau")) :
-                    print(f"{v.VarName} = {v.X}") #printing the ulam,tau,u,o_u and m[0,x] as a testing measure
+                    val = v.X
+                    # Round to nearest integer if close enough
+                    if abs(val - round(val)) < 1e-4:
+                        val = round(val)
+                    print(f"{v.VarName} = {val}")
+            print("-----------------------------------------------------------------")
+            for v in model.getVars():
+                if v.X <1  and  v.X>0:
+                    print(f"{v.VarName} = {v.X}")
+            print("-----------------------------------------------------------------")
+            
+                    # print(f"{v.VarName} = {v.X}") #printing the ulam,tau,u,o_u and m[0,x] as a testing measure
             model.remove(constr_corr) # removing the current constraint - this has to be done because we will be using the same solution in the find_pareto_optimal_solution_more_c and if we don't remove it then the the model will become infeasible
             model.remove(constr_expl)
             new_correctness = float(calculate_correctness(solution))
@@ -89,7 +100,18 @@ def find_pareto_solution_more_c(solution):
             print("Objective value:", model.objVal)
             for v in model.getVars():
                 if (v.VarName.startswith("o_u") or v.VarName.startswith("u") or v.VarName.startswith("m[0") or v.VarName.startswith("lam") or v.VarName.startswith("tau")) :
-                    print(f"{v.VarName} = {v.X}") #printing the lam,tau,u,o_u amd m[0,x] as a testing measure
+                    val = v.X
+                    # Round to nearest integer if close enough
+                    if abs(val - round(val)) < 1e-4:
+                        val = round(val)
+                    print(f"{v.VarName} = {val}")
+            print("-----------------------------------------------------")
+            for v in model.getVars():
+                if v.X <1  and  v.X>0:
+                    print(f"{v.VarName} = {v.X}")
+            print("-----------------------------------------------------------------")
+
+                    # print(f"{v.VarName} = {v.X}") #printing the lam,tau,u,o_u amd m[0,x] as a testing measure
         if model.status == GRB.INFEASIBLE:
             print("[INFO] Model became infeasible under the new cuts.")
             print("End of find_pareto_solution_more_c 1 |||||||||||||||||")
@@ -160,9 +182,9 @@ def find_new_pareto_points(I,C):
     def return_corr(point):
         return point[0]
     sorted_pareto_points = sorted(pareto_points, key=return_corr) 
-    pareto_dir = "examples/wine/lam_and_tau_integer_for_not_divisible_by_5_integer/pareto_points"
+    pareto_dir = "examples/wine/lam_and_tau_integers/pareto_points"
     os.makedirs(pareto_dir, exist_ok=True)
-    filename = f"examples/wine/lam_and_tau_integer_for_not_divisible_by_5_integer/pareto_points/pareto_points{I}_{C}.csv"
+    filename = f"examples/wine/lam_and_tau_integers/pareto_points/pareto_points{I}_{C}.csv"
     with open(filename, mode="w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["c", "e"])
@@ -183,7 +205,7 @@ def plot_pareto_curve(sorted_pareto_points,I,C):
     plt.xlabel('Correctness')
     plt.ylabel('Explainability')
     # plt.show()
-    out_dir = "examples/wine/lam_and_tau_integer_for_not_divisible_by_5_integer/pareto_curves"
+    out_dir = "examples/wine/lam_and_tau_integers/pareto_curves"
     os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, f"pareto_curve_{I}_{C}.png")
     plt.tight_layout()
