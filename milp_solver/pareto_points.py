@@ -228,9 +228,9 @@ from encoding import Encoding
 #     print("Pareto points:", pts)
 
 class Pareto_Points:
-    def __init__(self,dirname, max_nodes, int_pos, root:int):
+    def __init__(self,inp, int_pos, root:int):
         self.root = root
-        self.inp = Input(dirname,max_nodes)
+        self.inp = inp
         self.pareto_points= []
         self.enc = Encoding(int_pos, self.inp, root)
 
