@@ -44,16 +44,16 @@ proline < 500
 675 <= proline < 985
 proline >= 985
 
-predicate: alc_flav_sum : 3 : 1
+predicate: alc_flav_sum : 3 : 5
 alc_flav_sum < 15.0
 15.0 <= alc_flav_sum < 16.5
 alc_flav_sum >= 16.5
 
-predicate: color_minus_hue : 2 : 1
+predicate: color_minus_hue : 2 : 7
 color_minus_hue < 3.0
 color_minus_hue >= 3.0
 
-predicate: proline_minus_malic : 3 : 2
+predicate: proline_minus_malic : 3 : 4
 proline_minus_malic < 500
 500 <= proline_minus_malic < 900
 proline_minus_malic >= 900

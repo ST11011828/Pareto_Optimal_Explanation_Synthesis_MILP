@@ -49,20 +49,27 @@ class Encoding:
         # self.lam.update(lam_cont)
         self.lam = self.model.addVars(((i,p) for i in self.I for p in self.P), vtype=GRB.INTEGER , lb=0.0 , ub = 1.0 , name="lam")
         all_nodes = list(self.I) + list(self.L.keys())
-        tau_int = self.model.addVars(
+        tau_int_user_set = self.model.addVars(
             ((i,c,j) for i in self.I if i in self.int_pos
              for c in self.C
              for j in all_nodes if node_order(j) > i),
-             vtype= GRB.INTEGER, lb=0.0, ub = 1.0, name ="tau"
+             vtype= GRB.BINARY, lb=0.0, ub = 1.0, name ="tau"
+        )
+        tau_int_default = self.model.addVars(
+            ((i,c,j) for i in self.I if i not in self.int_pos
+             for c in self.C
+             for j in all_nodes if node_order(j) > i and j in self.L.keys()),
+             vtype= GRB.BINARY, lb=0.0, ub = 1.0, name ="tau"
         )
         tau_cont = self.model.addVars(
             ((i,c,j) for i in self.I if i not in self.int_pos
              for c in self.C
-             for j in all_nodes if node_order(j) > i),
+             for j in all_nodes if node_order(j) > i and j not in self.L.keys()),
              vtype= GRB.CONTINUOUS, lb=0.0, ub = 1.0, name ="tau"
         )
         self.tau = gp.tupledict()
-        self.tau.update(tau_int)
+        self.tau.update(tau_int_user_set)
+        self.tau.update(tau_int_default)
         self.tau.update(tau_cont)
 
         self.m = self.model.addVars(((i,s) for i in all_nodes for s in self.S), vtype=GRB.CONTINUOUS , lb=0.0 , ub = 1.0 , name="m")
@@ -91,6 +98,18 @@ class Encoding:
                         for j in self.I:
                             if node_order(j) > i:
                                 self.model.addConstr(self.lam[i, p] + self.tau[i, c, j] + self.lam[j, p] <= 2)
+
+        for i in self.I:
+            for c in self.C:
+                self.model.addConstr(gp.quicksum(self.tau[i,c,j] for j in all_nodes if node_order(j)>i) == gp.quicksum(self.inp.valid_branch(c,p)*self.lam[i,p] for p in self.P))
+
+        
+        # # SOS1 tagging (optional but effective)
+        # for i in self.I:
+        #     for c in self.C:
+        #         vars_ = [self.tau[i,c,j] for j in all_nodes if node_order(j) > i]
+        #         if vars_:
+        #             self.model.addSOS(gp.GRB.SOS_TYPE1, vars_, list(range(1, len(vars_)+1)))
 
         # consistency constraints (no child if c >= num_buckets)
         for i in self.I:
@@ -133,6 +152,10 @@ class Encoding:
                     )
 
                 # m upper bound
+                # self.model.addConstr(
+                #     # self.m[i, s] <= gp.quicksum(self.d[i, c, j, s] for c in self.C for j in all_nodes if node_order(j) > i),
+                #     name="m_upper_bound"
+                # )
                 self.model.addConstr(
                     self.m[i, s] <= gp.quicksum(self.d[i, c, j, s] for c in self.C for j in all_nodes if node_order(j) > i),
                     name="m_upper_bound"
@@ -233,7 +256,7 @@ class Encoding:
 
     
 def main():
-    inp = Input("examples/wine", max_nodes=3)
+    inp = Input("examples/wine", max_nodes=5)
     ints_pos = {0,1,2}             # make root’s lam and tau integral (add more indices if you like)
     enc = Encoding(ints_pos, inp, root=0)
     enc.tree_constraints()

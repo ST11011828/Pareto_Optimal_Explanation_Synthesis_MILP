@@ -152,6 +152,12 @@ class Input:
 
         # self.samples.updated_samples = df
 
+    def valid_branch(self,bucket_id, pred_id):
+        if bucket_id < self.predicates[pred_id].num_buckets:
+            return 1
+        else:
+            return 0
+
     def func(self, sample_id , pred_id, bucket_id = -1):
         df = self.samples.updated_samples
         curr_s = df.iloc[sample_id]
