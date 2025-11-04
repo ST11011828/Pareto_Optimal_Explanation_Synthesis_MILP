@@ -31,6 +31,7 @@ class Pareto_Points:
             if self.enc.model.status == GRB.INFEASIBLE:
                 print( f"Model infeasible for explainabbility = {expl} , trying for next value")
                 print("Stopping at line 33---------------------------------------")
+                break
             elif self.enc.model.status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
                 print(f"Model failed (status={self.enc.model.status}) for explainability = {expl}, skipping")
                 print("Stopping at line 36---------------------------------------")
@@ -224,7 +225,7 @@ class Pareto_Points:
         plt.close()
 
 def main():
-    pp_ = Input("examples/wine",3)
+    pp_ = Input("examples/wine",2)
     pp = Pareto_Points(pp_,{0},0)
     pp.find_pareto_points()
 

@@ -221,9 +221,10 @@ class Encoding:
             GRB.MAXIMIZE
         )
         self.model.optimize()
-        for v in self.model.getVars():
-            if (v.VarName.startswith("o_u") or v.VarName.startswith("u") or v.VarName.startswith("m[0") or v.VarName.startswith("lam") or v.VarName.startswith("tau")) :
-                print(f"{v.VarName} = {v.X}") 
+        if self.model.Status == GRB.OPTIMAL:
+            for v in self.model.getVars():
+                if (v.VarName.startswith("o_u") or v.VarName.startswith("u") or v.VarName.startswith("m[0") or v.VarName.startswith("lam") or v.VarName.startswith("tau")) :
+                    print(f"{v.VarName} = {v.X}") 
 
         # return the objects so caller can inspect .X values
         return {
