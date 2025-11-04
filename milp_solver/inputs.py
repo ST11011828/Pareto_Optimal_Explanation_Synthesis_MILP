@@ -225,17 +225,17 @@ class Input:
 #     print(k.updated_samples)
 #     print("---------------------------------------")
     
-# def main():
-# # def input_class_tester_main():
-#     k = Input("examples/random_dataset",8)
-#     # print(k.filename)
-#     # print(k.samples.features)
-#     # print(k.predicates)
-#     # print(k.c_max)
-#     # print(k.leaves)
-#     # print(k.predicates[0].conditions)
-#     # print(k.func(2,2,1))
-#     print(k.func(1,"shreya"))
+def main():
+# def input_class_tester_main():
+    k = Input("examples/random_dataset",8)
+    # print(k.filename)
+    # print(k.samples.features)
+    # print(k.predicates)
+    # print(k.c_max)
+    # print(k.leaves)
+    # print(k.predicates[0].conditions)
+    # print(k.func(2,2,1))
+    print(k.func(1,"shreya"))
 
 if __name__ == "__main__":
     main()
