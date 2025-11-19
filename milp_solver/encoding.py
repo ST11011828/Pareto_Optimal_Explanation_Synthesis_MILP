@@ -1,75 +1,84 @@
+import matplotlib.pyplot as plt
+from matplotlib import cm, colors as mcolors
+from collections import deque
 from inputs import Input
 import gurobipy as gp
 from gurobipy import GRB
+import os
 
+#NOTE: put tau00l1 is true and see what happens
+MAX_NODES = 10000
 
 def node_order(j):
     if isinstance(j, int):
         return j
     if isinstance(j, str) and j.startswith("L") and j[1:].isdigit():
-        return 10000 + int(j[1:])
-    return 999999  
+        return MAX_NODES + int(j[1:]) #NOTE:use macro here ------> Done!
+    return MAX_NODES  
 
 
 '''
-Write a class Encoding with the following instance attributes:
+Instance attributes:
 inp(Input)
 tau, lam , ...... other encoding variables
 ints_pos - specifying for which i tau_{icj} and lam_{ip} should be made integral
 root - which node should be considered as the root
 Instance functions:
-tree_constraints()
-samples_constraints()
-reachability_constraints()
+tree_constraints() - adds the constraints that builds up the tree
+samples_constraints() - adds the contraints that parse the samples on the tree for calculating correctness
+reachability_constraints() - adds the constraints that parse the tree for reachability
 objective() - sets the objective, optimizes the model and returns the solution
 '''
-
+#dump iteratively whatever you have done in a gurobi file
 class Encoding:
-    def __init__(self, int_pos , inp:Input , root):
+    def __init__(self, int_nodes , inp:Input , root , MAX_EXPLANATION = 1037): #NOTE:give better name to int_pos
         self.inp = inp
-        self.int_pos = set(int_pos)
+        self.int_nodes = set(int_nodes) #converting to set because it is faster to check containment in set
         self.root = root
-        self.MAX_EXPLANATION = 1037
+        self.MAX_EXPLANATION = MAX_EXPLANATION 
         self.I = range(self.inp.max_nodes)
         self.C= range(self.inp.c_max)
         self.P = range(len(self.inp.predicates))
         self.S = range(len(self.inp.samples.updated_samples))
         self.L = {f"L{i}":label for i,label in enumerate(self.inp.leaves)}
         self._built = False
+        self._int_tag = "none" if not self.int_nodes else "_".join(str(i) for i in sorted(self.int_nodes))
+        self.C_QUANT = 1.0/len(self.S)
+        self.E_ROUNDING_LIMIT = 6
 
         self.model = gp.Model("pareto_points_exploration")
-        # lam_int = self.model.addVars(
-        #     ((i,p) for i in self.I if i in self.int_pos for p in self.P) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "lam"
-        # )
-        # lam_cont = self.model.addVars(
-        #     ((i,p) for i in self.I if i not in self.int_pos for p in self.P) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "lam"
-        # )
-        # self.lam = gp.tupledict()
-        # self.lam.update(lam_int)
-        # self.lam.update(lam_cont)
-        self.lam = self.model.addVars(((i,p) for i in self.I for p in self.P), vtype=GRB.INTEGER , lb=0.0 , ub = 1.0 , name="lam")
+        lam_int = self.model.addVars(
+            ((i,p) for i in self.I if i in self.int_nodes for p in self.P) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "lam"
+        )
+        lam_cont = self.model.addVars(
+            ((i,p) for i in self.I if i not in self.int_nodes for p in self.P) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "lam"
+        )
+        self.lam = gp.tupledict()
+        self.lam.update(lam_int)
+        self.lam.update(lam_cont)
+        # self.lam = self.model.addVars(((i,p) for i in self.I for p in self.P), vtype=GRB.INTEGER , lb=0.0 , ub = 1.0 , name="lam")
         all_nodes = list(self.I) + list(self.L.keys())
         tau_int_user_set = self.model.addVars(
-            ((i,c,j) for i in self.I if i in self.int_pos
+            ((i,c,j) for i in self.I if i in self.int_nodes
              for c in self.C
              for j in all_nodes if node_order(j) > i),
-             vtype= GRB.BINARY, lb=0.0, ub = 1.0, name ="tau"
+             vtype= GRB.INTEGER, lb=0.0, ub = 1.0, name ="tau"
         )
-        tau_int_default = self.model.addVars(
-            ((i,c,j) for i in self.I if i not in self.int_pos
-             for c in self.C
-             for j in all_nodes if node_order(j) > i and j in self.L.keys()),
-             vtype= GRB.BINARY, lb=0.0, ub = 1.0, name ="tau"
-        )
+        # tau_int_default = self.model.addVars(
+        #     ((i,c,j) for i in self.I if i not in self.int_nodes
+        #      for c in self.C
+        #      for j in all_nodes if node_order(j) > i and j in self.L.keys()),
+        #      vtype= GRB.BINARY, lb=0.0, ub = 1.0, name ="tau"
+        # )
         tau_cont = self.model.addVars(
-            ((i,c,j) for i in self.I if i not in self.int_pos
+            ((i,c,j) for i in self.I if i not in self.int_nodes
              for c in self.C
-             for j in all_nodes if node_order(j) > i and j not in self.L.keys()),
+             for j in all_nodes if node_order(j) > i ),
              vtype= GRB.CONTINUOUS, lb=0.0, ub = 1.0, name ="tau"
         )
         self.tau = gp.tupledict()
         self.tau.update(tau_int_user_set)
-        self.tau.update(tau_int_default)
+        # self.tau.update(tau_int_default)
         self.tau.update(tau_cont)
 
         self.m = self.model.addVars(((i,s) for i in all_nodes for s in self.S), vtype=GRB.CONTINUOUS , lb=0.0 , ub = 1.0 , name="m")
@@ -98,18 +107,10 @@ class Encoding:
                         for j in self.I:
                             if node_order(j) > i:
                                 self.model.addConstr(self.lam[i, p] + self.tau[i, c, j] + self.lam[j, p] <= 2)
-
+        #NOTE: State assumptions beforehand
         for i in self.I:
             for c in self.C:
                 self.model.addConstr(gp.quicksum(self.tau[i,c,j] for j in all_nodes if node_order(j)>i) == gp.quicksum(self.inp.valid_branch(c,p)*self.lam[i,p] for p in self.P))
-
-        
-        # # SOS1 tagging (optional but effective)
-        # for i in self.I:
-        #     for c in self.C:
-        #         vars_ = [self.tau[i,c,j] for j in all_nodes if node_order(j) > i]
-        #         if vars_:
-        #             self.model.addSOS(gp.GRB.SOS_TYPE1, vars_, list(range(1, len(vars_)+1)))
 
         # consistency constraints (no child if c >= num_buckets)
         for i in self.I:
@@ -123,6 +124,7 @@ class Encoding:
         all_nodes = list(self.I) + list(self.L.keys())
 
         for s in self.S:
+            #labelling the leaf
             for l_key,l_value in self.L.items():
                 self.model.addConstr(self.m[l_key,s] == self.inp.func(s,l_value), name = "leaf")
 
@@ -199,7 +201,7 @@ class Encoding:
 
         # explanation budget
         self.model.addConstr(
-            gp.quicksum(1 - self.u[i] for i in self.I) +
+            (self.inp.max_weight+1)*gp.quicksum(1 - self.u[i] for i in self.I) +
             gp.quicksum(self.inp.predicates[p].weight * self.o_u[i, p] for i in self.I for p in self.P)
             <= self.MAX_EXPLANATION
         )
@@ -212,19 +214,46 @@ class Encoding:
         self.reachability_constraints()
         self._built = True
 
-    def solve(self):
+    def solve(self, e_l , e_u , c_l , c_u ):
+        #TODO: remove all the old constraints
+        old_cons = [c for c in self.model.getConstrs() if c.ConstrName and c.ConstrName.startswith("temp_")]
+        if old_cons:
+            self.model.remove(old_cons)
+            self.model.update()
+        #adding all the fixed constraints
         self._build_constraints()
+        # self.model.addConstr(self.m[0,1] == 1)
+        #adding the new constraints
+        if e_l is not None:
+            self.model.addConstr((self.inp.max_weight+1)*gp.quicksum(1 - self.u[i] for i in self.I) +
+            gp.quicksum(self.inp.predicates[p].weight * self.o_u[i, p] for i in self.I for p in self.P) >= e_l , name = "temp_e_lower")
+        if e_u is not None:
+            self.model.addConstr((self.inp.max_weight+1)*gp.quicksum(1 - self.u[i] for i in self.I) +
+            gp.quicksum(self.inp.predicates[p].weight * self.o_u[i, p] for i in self.I for p in self.P) <= e_u , name = "temp_e_upper")
+        if c_l is not None:
+            self.model.addConstr(gp.quicksum(self.m[self.root, s] for s in self.S) >= c_l*len(self.S) , name = "temp_c_lower")
+        if c_u is not None:
+            self.model.addConstr(gp.quicksum(self.m[self.root, s] for s in self.S) <= c_u*len(self.S) , name = "temp_c_upper")
         self.model.setObjective(
-            gp.quicksum(1 - self.u[i] for i in self.I) +
+            (self.inp.max_weight+1)*gp.quicksum(1 - self.u[i] for i in self.I) +
             gp.quicksum(self.inp.predicates[p].weight * self.o_u[i, p] for i in self.I for p in self.P) +
             gp.quicksum(self.m[self.root, s] for s in self.S),
             GRB.MAXIMIZE
         )
+        diagram_path = None
+        self.model.update()
+        # self.model.write(f"I_{self.inp.max_nodes}_int_nodes_{self._int_tag}.lp") 
         self.model.optimize()
         if self.model.Status == GRB.OPTIMAL:
             for v in self.model.getVars():
-                if (v.VarName.startswith("o_u") or v.VarName.startswith("u") or v.VarName.startswith("m[0") or v.VarName.startswith("lam") or v.VarName.startswith("tau")) :
+                if (v.VarName.startswith("o_u") or v.VarName.startswith("u") or v.VarName.startswith("m") or v.VarName.startswith("lam") or v.VarName.startswith("tau")) :
                     print(f"{v.VarName} = {v.X}") 
+            out_dir = os.path.join(self.inp.filename, "results",f"I_{self.inp.max_nodes}_int_nodes_{self._int_tag}", "decision_diagrams")
+            os.makedirs(out_dir, exist_ok=True)
+            diagram_path = os.path.join(out_dir, f"e_l_{e_l}_e_u_{e_u}_c_l_{c_l}_c_u_{c_u}.png")  
+            self.plot_decision_diagram(edge_threshold=0.5, savepath=diagram_path)  
+            # diagram_path = os.path.abspath(diagram_path)
+
 
         # return the objects so caller can inspect .X values
         return {
@@ -243,11 +272,134 @@ class Encoding:
             "C": list(self.C),
             "L": self.L,
             "S": list(self.S),
-            "model": self.model
+            "model": self.model,
+            "diagram_path": diagram_path
         }
+    #NOTE
+    
+    def plot_decision_diagram(self, edge_threshold=0.5, savepath=None):
+        """
+        Draw the decision diagram from lam/tau.
+        - Draw ALL edges (i,c)->j whose τ[i,c,j] >= edge_threshold.
+        - Each parent i gets a unique base color; each bucket c is a lighter shade.
+        - Leaves are placed at the bottom; root at the top.
+        - Edge labels are black for readability.
+        """
+
+        # ---------- gather edges we will draw (ALL τ above threshold) ----------
+        all_nodes = list(self.I) + list(self.L.keys())
+        edges = []  # (i, j, c, τ_value)
+        for i in self.I:
+            for c in self.C:
+                for j in all_nodes:
+                    if node_order(j) > i:
+                        val = float(self.tau[i, c, j].X)
+                        if val >= edge_threshold:
+                            edges.append((i, j, c, val))
+
+        # ---------- build node labels (show ALL predicate names with lam values) ----------
+        node_label = {}
+        for i in self.I:
+            lines = [str(i)]
+            for p in self.P:
+                pname = self.inp.predicates[p].pred_name
+                lines.append(f"{pname}({float(self.lam[i, p].X):.2f})")
+            node_label[i] = "\n".join(lines)
+        for leaf_key, leaf_val in self.L.items():
+            node_label[leaf_key] = f"{leaf_key}\n{leaf_val}"
+
+        # ---------- compute vertical "levels": BFS for internal nodes, leaves at bottom ----------
+        level = {self.root: 0}
+        q = deque([self.root])
+
+        # adjacency among internal nodes only (so the layout is top-down)
+        adj = {}
+        for i, j, c, v in edges:
+            if isinstance(j, int):  # only internal children
+                adj.setdefault(i, []).append(j)
+
+        while q:
+            u = q.popleft()
+            for v in adj.get(u, []):
+                if v not in level:
+                    level[v] = level[u] + 1
+                    q.append(v)
+
+        max_internal_level = max(level.values()) if level else 0
+        used_leaves = {j for _, j, _, _ in edges if isinstance(j, str)}
+        bottom_level = max_internal_level + 1
+        for lk in used_leaves:
+            level[lk] = bottom_level
+
+        # ---------- assign (x, y) positions: spread nodes on each level ----------
+        levels_to_nodes = {}
+        for n, L in level.items():
+            levels_to_nodes.setdefault(L, []).append(n)
+        for L in levels_to_nodes:
+            levels_to_nodes[L].sort(key=lambda x: node_order(x))
+
+        pos = {}
+        for L, nodes_on_L in levels_to_nodes.items():
+            count = len(nodes_on_L)
+            for k, n in enumerate(nodes_on_L):
+                x = k - (count - 1) / 2.0    # center them horizontally
+                y = -L                        # higher L = lower y (top-down)
+                pos[n] = (x, y)
+
+        # ---------- color design: unique base per parent, clear shades per c ----------
+        parents = sorted({i for i, _, _, _ in edges})
+        base_map = cm.get_cmap('tab20', max(20, len(parents)))
+        parent_base = {i: base_map(idx / max(1, len(parents)-1)) for idx, i in enumerate(parents)}
+
+        # construct lightened shades for each bucket c of each parent i
+        parent_c_color = {}
+        for i in parents:
+            base_rgb = mcolors.to_rgb(parent_base[i])
+            cs_for_i = sorted({c for (pi, _, c, _) in edges if pi == i})
+            steps = max(1, len(cs_for_i)-1)
+            for rank, c in enumerate(cs_for_i):
+                # alpha goes 0.20 -> 0.85 across c values (visibly distinct)
+                alpha = 0.20 + 0.65 * (rank / steps if steps else 0.0)
+                shade_rgb = (
+                    (1 - alpha) * base_rgb[0] + alpha * 1.0,
+                    (1 - alpha) * base_rgb[1] + alpha * 1.0,
+                    (1 - alpha) * base_rgb[2] + alpha * 1.0,
+                )
+                parent_c_color[(i, c)] = mcolors.to_hex(shade_rgb)
+
+        # ---------- draw ----------
+        plt.figure(figsize=(12, 9))
+
+        # nodes
+        for n, (x, y) in pos.items():
+            face = "lightgreen" if isinstance(n, str) else ("gold" if n == self.root else "skyblue")
+            plt.scatter([x], [y], s=700, color=face, edgecolor="black", zorder=3)
+            plt.text(x, y, node_label[n], ha="center", va="center", fontsize=8, zorder=4)
+
+        # edges (ALL transitions above threshold)
+        for i, j, c, val in edges:
+            if i in pos and j in pos:
+                xi, yi = pos[i]
+                xj, yj = pos[j]
+                col = parent_c_color.get((i, c), "#000000")
+                width = 1.5 + 2.0 * float(val)           # a bit thicker for larger τ
+                plt.plot([xi, xj], [yi, yj], color=col, linewidth=width, alpha=0.98, zorder=2)
+
+                # label (always black). Slightly biased toward the child so it doesn't sit on node centers
+                lx = 0.55 * xj + 0.45 * xi
+                ly = 0.55 * yj + 0.45 * yi
+                plt.text(lx, ly, f"c={c}, τ={val:.2f}", fontsize=8, color="black", zorder=5)
+
+        plt.axis("off")
+        plt.tight_layout()
+        if savepath:
+            plt.savefig(savepath, dpi=240, bbox_inches="tight")
+            plt.close()
+        else:
+            plt.show()
     
     def calculate_explainability(self):
-        return sum(1-self.u[i].X for i in self.I) + sum(self.inp.predicates[p].weight*self.o_u[i,p].X for i in self.I for p in self.P)
+        return (self.inp.max_weight+1)*sum(1-self.u[i].X for i in self.I) + sum(self.inp.predicates[p].weight*self.o_u[i,p].X for i in self.I for p in self.P)
     
     def calculate_correctness(self):
         return sum(self.m[self.root, s].X for s in self.S)*1.0/len(self.S)
@@ -257,13 +409,15 @@ class Encoding:
 
     
 def main():
-    inp = Input("examples/wine", max_nodes=5)
-    ints_pos = {0,1,2}             # make root’s lam and tau integral (add more indices if you like)
+    inp = Input("examples/wine", max_nodes=6)
+    ints_pos = {0,1,2,3,4,5}             # make root’s tau integral (add more indices if you like)
     enc = Encoding(ints_pos, inp, root=0)
     enc.tree_constraints()
     enc.sample_constraints()
     enc.reachability_constraints()
-    sol = enc.solve()
+    sol = enc.solve(None,None,0.5,None)
+    print(f"Explainability is {enc.calculate_explainability()}")
+    print(f"Correctness is {enc.calculate_correctness()}")
 
     print("Status:", sol["status"])
     print("Obj:", sol["obj"])

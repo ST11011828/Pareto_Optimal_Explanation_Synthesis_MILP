@@ -85,7 +85,7 @@ class Input:
       NOTE:
       Currently there is a restriction that maximum weight is less that 20000000000(aribitrarily chosen large number for now)
     '''
-    def __init__(self, filename, max_nodes):
+    def __init__(self, filename, max_nodes, MAX_WEIGHT = 20000000000):
         self.filename = filename #initializing filename
         self.max_nodes = max_nodes #initializing max_nodes
         self.samples = Samples(os.path.join(self.filename, "samples.csv")) #making an object of the class Samples
@@ -93,7 +93,7 @@ class Input:
         self.c_max = 0
         self.leaves = []
         self.max_weight = 0
-        self.min_weight = 20000000000
+        self.min_weight = MAX_WEIGHT
         self.read_features() # predicates[] updated
         self.samples.put_label_at_end() 
         self.calculate_c_max() 
@@ -169,9 +169,9 @@ class Input:
                 # appending the conditions to the current predicate
                 current_pred.conditions.append(line)
 
-            if len(current_pred.conditions) != current_pred.num_buckets:
-                sys.stderr(f"Conditions for predicate {current_pred.pred_name} are not consistent with number of buckets entered")
-                sys.exit(1)
+            # if len(current_pred.conditions) != current_pred.num_buckets:
+            #     sys.stderr(f"Conditions for predicate {current_pred.pred_name} are not consistent with number of buckets entered")
+            #     sys.exit(1)
 
         # self.samples.updated_samples = df
 
@@ -226,16 +226,48 @@ class Input:
 #     print("---------------------------------------")
     
 def main():
+    print("Testing class Samples")
+    print("-------------------------------------------------")
+    k = Samples("examples/random_dataset/samples.csv")
+    print("PRINTING FEATURES --------------")
+    print(k.features)
+    print("PRINTING OUTPUT--------------------------")
+    print(k.output)
+    print("PRINTING UPDATED SAMPLES-------------")
+    print(k.updated_samples)
+    print("TESTING OF THE CLASS SAMPLES DONE!!!!!!!")
+    print("-------------------------------------")
+    print("-------------------------------------")
+    print("Testing class Input")
 # def input_class_tester_main():
-    k = Input("examples/random_dataset",8)
-    # print(k.filename)
-    # print(k.samples.features)
-    # print(k.predicates)
-    # print(k.c_max)
-    # print(k.leaves)
-    # print(k.predicates[0].conditions)
-    # print(k.func(2,2,1))
-    print(k.func(1,"shreya"))
+    k1 = Input("examples/random_dataset",8)
+    print("PRINTING FILENAME")
+    print(k1.filename)
+    print("--------------------------------------")
+    print("Printing features of the samples in the input")
+    print(k1.samples.features)
+    print("--------------------------------------")
+    print("Printing the predicates of input")
+    print(k1.predicates)
+    print("--------------------------------------")
+    print("Printing c_max")
+    print(k1.c_max)
+    print("----------------------------------")
+    print("Printing leaves")
+    print(k1.leaves)
+    print("--------------------------------")
+    print("Printing conditions for a particular predicate")
+    print(k1.predicates[0].conditions)
+    print("-------------------------------------")
+    print("Printing the number of buckets for a particular predicate")
+    print(k1.predicates[1].num_buckets)
+    print("------------------------------")
+    print("Testing the valid_branch() function")
+    print(k1.valid_branch(2,1))
+    print("---------------------------")
+    print("Testing the function func()")
+    print(k1.func(1,"shy"))
+    print(k1.func(2,2,1))
 
 if __name__ == "__main__":
     main()

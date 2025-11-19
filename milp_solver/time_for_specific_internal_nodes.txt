@@ -1,0 +1,45 @@
+wine dataset
+
+datapoints - 178 
+internal nodes = 10
+all integers - more than 6.5 hours for a single solution
+root integer only - 53.60 seconds
+
+internal nodes = 9 
+all integers - more than 12 hours for a single solution
+root integer only - 35.03 seconds
+
+internal nodes = 8
+all integers - more than 6 hours for a single solution
+root integer only - 22.20 seconds
+
+internal nodes =7
+all integers - 16 hours for the entire pareto curve
+root integer only - 27.89 seconds
+
+internal nodes = 6
+all integers - 1490.01 seconds
+root integer only - 20.75 seconds
+
+internal nodes = 5
+all integers - 179.27 seconds
+root integer only - 13.51 seconds
+
+internal nodes = 4
+all integers - 49.94 seconds
+root integer only - 11.51 seconds
+
+internal nodes = 3
+all integers - 21.37 seconds
+root integer only - 15.40 seconds
+
+internal nodes = 2
+all integers - 7.57 seconds
+root integer only - 5.53 seconds
+
+internal nodes = 1
+all integers - 2.01 seconds
+root integer - 2.69 seconds
+
+
+

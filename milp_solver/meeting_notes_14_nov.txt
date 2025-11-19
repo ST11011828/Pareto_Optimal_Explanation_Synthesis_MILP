@@ -1,0 +1,17 @@
+Add comments with specific examples used for testing
+Run on different datasets and calculate the time taken
+
+2 goals-
+1. Find an upper bound of the pareto curve
+2. Make appropriate changes in the encoding so that the process scales
+
+
+Root has to be binary lam and tau of everything else is continuous
+Tau and lam of root is binary lam of everything else binary tau continuous
+root+one node connected to it binary
+Different ways to explore the space are going to be an upper bound
+
+Create a directory with test cases
+Allow more flexibility in relaxation - find out the variables that hit hard when made binary(find experimentally)
+talk to Aniruddha about sat check and combining both the approaches.
+Write the approaches discussed today properly so that we can discuss with. others

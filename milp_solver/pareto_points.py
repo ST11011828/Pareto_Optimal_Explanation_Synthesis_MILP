@@ -3,218 +3,123 @@ import csv
 import matplotlib.pyplot as plt
 import gurobipy as gp
 from gurobipy import GRB
+import time
 
 from inputs import Input, Predicate
 from encoding import Encoding
 
 
 class Pareto_Points:
-    def __init__(self,inp, int_pos, root:int):
+    def __init__(self,dir_name, max_nodes, int_pos, root:int):
         self.root = root
-        self.inp = inp
+        self.inp = Input(dir_name, max_nodes)
         self.pareto_points= []
         self.enc = Encoding(int_pos, self.inp, root)
 
-    def find_pareto_points(self):
-        possible_explainabilities = range(self.inp.min_weight+self.inp.max_nodes-1, self.inp.max_nodes*self.inp.max_weight+1)
-        for expl in possible_explainabilities:
-            expl_constr = self.enc.model.addConstr(
-                gp.quicksum(1 - self.enc.u[i] for i in self.enc.I) +
-                gp.quicksum(self.enc.inp.predicates[p].weight * self.enc.o_u[i, p] for i in self.enc.I for p in self.enc.P)
-                == expl
-            )
-            print("Stopping at line 26----------------------")
-            self.enc.model.update()
-            self.enc.solve()
-            print("Stopping at line 29---------------------------------------")
-            print("SOLVED FOR THE NEW POINT, NOW CHECKING IF IT IS PARETO_POINT OR NOT")
-            if self.enc.model.status == GRB.INFEASIBLE:
-                print( f"Model infeasible for explainabbility = {expl} , trying for next value")
-                print("Stopping at line 33---------------------------------------")
-                break
-            elif self.enc.model.status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
-                print(f"Model failed (status={self.enc.model.status}) for explainability = {expl}, skipping")
-                print("Stopping at line 36---------------------------------------")
-                continue
-            else :
-                curr_expl = self.enc.calculate_explainability()
-                curr_correctness = self.enc.calculate_correctness()
-                print("Stopping at line 41---------------------------------------")
-                print(f"Checking if e= {curr_expl} and c = {curr_correctness} is a pareto point or not")
-                if len(self.pareto_points) != 0:
-                    if self.pareto_points[-1][0] > curr_correctness and self.pareto_points[-1][1] > curr_expl:
-                        print("CURRENT POINT IS NOT PARETO OPTIMAL, THE PREVIOUS POINT HAS BOTH GREATER CORRECTNESS AND GREATER EXPL")
-                    elif self.pareto_points[-1][0] < curr_correctness and self.pareto_points[-1][1] < curr_expl:
-                        print("The CURRENT POINT PARETO_DOMINATES THE PREVIOUS POINT, HENCE IT IS BEING REPLACED, BOTH EXPL AND CORR ARE MORE")
-                        self.pareto_points[-1][0] = curr_correctness
-                        self.pareto_points[-1][1] = curr_expl
-                    elif self.pareto_points[-1][0] == curr_correctness and self.pareto_points[-1][1] < curr_expl:
-                        print("PREV POINT HAS SAME CORR AND HIGHER EXPL, OVERWRITING THE NEW POINT")
-                        self.pareto_points[-1][1] = curr_expl
-                    elif self.pareto_points[-1][0] < curr_correctness and self.pareto_points[-1][1] == curr_expl:
-                        print("PREV POINT HAS GREATER CORR SAME EXPL, OVERWRITING.........")
-                        self.pareto_points[-1][0] = curr_correctness
-                    else:
-                        print("Adding NEW PARETO POINT")
-                        self.pareto_points.append([curr_correctness, curr_expl])
-                else:
-                    self.pareto_points.append([curr_correctness, curr_expl])
-                print("Stopping at line 61---------------------------------------")
-                self.last_feasible_tau = {k: self.enc.tau[k].X for k in self.enc.tau.keys()}
-                self.last_feasible_u = {i: self.enc.u[i].X for i in self.enc.I}
-                self.last_feasible_lam = {k: self.enc.lam[k].X for k in self.enc.lam.keys()}
-                self.last_feasible_o_u = {k: self.enc.o_u[k].X for k in self.enc.o_u.keys()}
-
+    def find_pareto_points(self, e_l, e_u , c_l , c_u):
+        if (e_l is not None and e_u is not None and e_l > e_u) or (c_l is not None and c_u is not None and c_l > c_u):
+            return
+        print("-----------------------------------------------------------------")
+        print(f"e_l={e_l}, e_u={e_u}, c_l={c_l}, c_u={c_u}")
+        print("Inside the find_pareto_points function")
+        # possible_pareto_point = self.enc.solve(e_l, e_u , c_l , c_u)
+        res = self.enc.solve(e_l, e_u , c_l , c_u)
+        print("Solving done")
+        if self.enc.model.Status == GRB.INFEASIBLE:
+            print("Returning because the model was infeasible")
+            return
+        c = self.enc.calculate_correctness()
+        e = self.enc.calculate_explainability()
+        print("--------------------")
+        print(f"c={c}, e={e}")
+        diagram_path = None if res is None else res.get("diagram_path")  
+        print("Appending to pareto_points list")
+        # c_final = round(c/self.enc.C_QUANT)*self.enc.C_QUANT
+        c_final = max(0.0, min(1.0, round(c / self.enc.C_QUANT) * self.enc.C_QUANT))
+        assert abs(c_final-c)<= 0.5 * self.enc.C_QUANT + 1e-12, f"Moving away because of the rounding too much!, by {abs(c_final-c)}"
+        e_final = round(e,self.enc.E_ROUNDING_LIMIT)
+        self.pareto_points.append([c_final, e_final, diagram_path]) 
+        if e_u is not None and e_l is not None and e_u == e_l:
+            return
+        if c_u is not None and c_l is not None and c_u == c_l:
+            return
+        # print("Appending to pareto_points list")
+        # self.pareto_points.append([c,e])
+        if e_u is not None and e+1 <= e_u:
+            print("Searching solutions with greater explainability")
+            self.find_pareto_points(e+1,e_u,c_l,c - 1.0/len(self.enc.S) )
+        else:
+            if e_u is None:
+                print("Searching solutions with greater explainability with e_u None")
+                self.find_pareto_points(e+1,e_u,c_l,c- 1.0/len(self.enc.S) )
+        if e_l is not None and e-1 >= e_l:
+            print("Searching for solutions with greater correctness")
+            self.find_pareto_points(e_l,e-1,c+ 1.0/len(self.enc.S),c_u)
+        else:
+            if e_l is None:
+                print("Searching for solutions with greater correctness with e_l None")
+                self.find_pareto_points(e_l,e-1,c+ 1.0/len(self.enc.S),c_u)
+            else:
+                return
             
-            self.enc.model.remove(expl_constr)
-            self.enc.model.update()
-        print("-------------------------------------------------|||||||||||||||||||||||||||||||||||||||||||||------------------------------------------------------------")
-        print(self.pareto_points)
-        #TODO: CHECK THIS
-        # self._prune_nondominated()
-        self.write_pareto_points()
-        self.plot_pareto_points()
+    def clean_pareto_points(self):
+        #arrange the pareto points in increasing order of correctness
+        self.pareto_points.sort(key=lambda t: t[0])
+        n = len(self.pareto_points)
+        #removing points appropriately when their correctness is same
+        pareto_so_far =0
+        for i in range(n):
+            c,e,path = self.pareto_points[i]
+            max_expl_so_far = e
+            best_path_so_far = path
+            while pareto_so_far > 0 and self.pareto_points[pareto_so_far-1][0] == c:
+                if self.pareto_points[pareto_so_far-1][1] > max_expl_so_far:
+                    max_expl_so_far = self.pareto_points[pareto_so_far-1][1]
+                    best_path_so_far = self.pareto_points[pareto_so_far-1][2]
+                pareto_so_far = pareto_so_far -1
+            self.pareto_points[pareto_so_far] = [c,max_expl_so_far,best_path_so_far]
+            pareto_so_far = pareto_so_far +1
 
-    # def find_pareto_points(self):
-    #     # Optional: set once
-    #     try:
-    #         self.enc.model.Params.MIPFocus = 1      # favor quick feasible solutions
-    #         self.enc.model.Params.Heuristics = 0.2  # modest heuristic effort
-    #         # Presolve stays auto (default)
-    #     except gp.GurobiError:
-    #         pass
+        del self.pareto_points[pareto_so_far:]
+        
+        # whenever you find a point that has greater explainability than the previous point, keep popping the previous point until you reach a stage where the previous point has greater explainability than the current point.
+        
+        n = len(self.pareto_points)
+        pareto_so_far = 0
+        for i in range(n):
+            c,e,path = self.pareto_points[i]
+            while pareto_so_far > 0 and self.pareto_points[pareto_so_far-1][1]<=e:
+                pareto_so_far = pareto_so_far -1
+            self.pareto_points[pareto_so_far] = [c,e,path]
+            pareto_so_far = pareto_so_far + 1
 
-    #     possible_explainabilities = range(
-    #         self.inp.min_weight + self.inp.max_nodes - 1,
-    #         self.inp.max_nodes * self.inp.max_weight + 1
-    #     )
+        del self.pareto_points[pareto_so_far:]
 
-    #     for expl in possible_explainabilities:
-    #         # Add equality to fix explainability
-    #         expl_constr = self.enc.model.addConstr(
-    #             gp.quicksum(1 - self.enc.u[i] for i in self.enc.I) +
-    #             gp.quicksum(self.enc.inp.predicates[p].weight * self.enc.o_u[i, p]
-    #                         for i in self.enc.I for p in self.enc.P)
-    #             == expl,
-    #             name=f"fix_expl_{expl}"
-    #         )
-    #         self.enc.model.update()
+        # delete all the decision diagrams that are not in the final pareto_points list
+        keep_paths = {path for _, _, path in self.pareto_points if path}  # paths we want to keep
+        diag_dir = os.path.join(self.inp.filename, "results", f"I_{self.enc.inp.max_nodes}_int_nodes_{self.enc._int_tag}", "decision_diagrams")
+        if os.path.isdir(diag_dir):
+            for fname in os.listdir(diag_dir):
+                fpath = os.path.join(diag_dir, fname)
+                if fpath not in keep_paths:
+                    os.remove(fpath)
 
-    #         # ---------- Warm start via Var.Start (robust across Gurobi versions) ----------
-    #         # Clear old starts only where we will set new ones (optional)
-    #         if hasattr(self, "last_feasible_lam"):
-    #             try:
-    #                 for k, v in self.last_feasible_lam.items():
-    #                     self.enc.lam[k].Start = v
-    #                 for k, v in self.last_feasible_tau.items():
-    #                     self.enc.tau[k].Start = v
-    #                 for i, v in self.last_feasible_u.items():
-    #                     self.enc.u[i].Start = v
-    #                 for k, v in self.last_feasible_o_u.items():
-    #                     self.enc.o_u[k].Start = v
-    #                 # 'm' start is optional (can be large):
-    #                 # if hasattr(self, "last_feasible_m"):
-    #                 #     for k, v in self.last_feasible_m.items():
-    #                 #         self.enc.m[k].Start = v
-    #             except gp.GurobiError as e:
-    #                 print(f"[warm-start] setting Start attributes skipped at expl={expl}: {e}")
-    #         # ------------------------------------------------------------------------------
-
-    #         self.enc.solve()
-    #         print("SOLVED FOR THE NEW POINT, NOW CHECKING IF IT IS PARETO_POINT OR NOT")
-
-    #         if self.enc.model.status == GRB.INFEASIBLE:
-    #             print(f"Model infeasible for explainabbility = {expl} , trying for next value")
-
-    #         elif self.enc.model.status not in (GRB.OPTIMAL, GRB.SUBOPTIMAL):
-    #             print(f"Model failed (status={self.enc.model.status}) for explainability = {expl}, skipping")
-    #             # Remove the constraint and continue
-    #             self.enc.model.remove(expl_constr)
-    #             self.enc.model.update()
-    #             continue
-
-    #         else:
-    #             curr_expl = self.enc.calculate_explainability()
-    #             curr_correctness = self.enc.calculate_correctness()
-    #             print(f"Checking if e= {curr_expl} and c = {curr_correctness} is a pareto point or not")
-
-    #             if len(self.pareto_points) != 0:
-    #                 if self.pareto_points[-1][0] > curr_correctness and self.pareto_points[-1][1] > curr_expl:
-    #                     print("CURRENT POINT IS NOT PARETO OPTIMAL, THE PREVIOUS POINT HAS BOTH GREATER CORRECTNESS AND GREATER EXPL")
-    #                 elif self.pareto_points[-1][0] < curr_correctness and self.pareto_points[-1][1] < curr_expl:
-    #                     print("The CURRENT POINT PARETO_DOMINATES THE PREVIOUS POINT, HENCE IT IS BEING REPLACED, BOTH EXPL AND CORR ARE MORE")
-    #                     self.pareto_points[-1][0] = curr_correctness
-    #                     self.pareto_points[-1][1] = curr_expl
-    #                 elif self.pareto_points[-1][0] == curr_correctness and self.pareto_points[-1][1] < curr_expl:
-    #                     print("PREV POINT HAS SAME CORR AND HIGHER EXPL, OVERWRITING THE NEW POINT")
-    #                     self.pareto_points[-1][1] = curr_expl
-    #                 elif self.pareto_points[-1][0] < curr_correctness and self.pareto_points[-1][1] == curr_expl:
-    #                     print("PREV POINT HAS GREATER CORR SAME EXPL, OVERWRITING.........")
-    #                     self.pareto_points[-1][0] = curr_correctness
-    #                 else:
-    #                     print("Adding NEW PARETO POINT")
-    #                     self.pareto_points.append([curr_correctness, curr_expl])
-    #             else:
-    #                 self.pareto_points.append([curr_correctness, curr_expl])
-
-    #             # Save solution for next warm start
-    #             self.last_feasible_tau = {k: self.enc.tau[k].X for k in self.enc.tau.keys()}
-    #             self.last_feasible_u   = {i: self.enc.u[i].X for i in self.enc.I}
-    #             self.last_feasible_lam = {k: self.enc.lam[k].X for k in self.enc.lam.keys()}
-    #             self.last_feasible_o_u = {k: self.enc.o_u[k].X for k in self.enc.o_u.keys()}
-    #             # Optionally:
-    #             # self.last_feasible_m = {k: self.enc.m[k].X for k in self.enc.m.keys()}
-
-    #         # Remove the equality for this sweep step
-    #         self.enc.model.remove(expl_constr)
-    #         self.enc.model.update()
-
-    #     print(self.pareto_points)
-    #     # Optional global prune here if you like:
-    #     # self._prune_nondominated()
-    #     self.write_pareto_points()
-    #     self.plot_pareto_points()
-
-
-    def _prune_nondominated(self):
-        # points are [[c, e], ...]
-        pts = self.pareto_points
-
-        # 1) collapse duplicates at same e keeping max c
-        by_e = {}
-        for c, e in pts:
-            if e not in by_e or c > by_e[e]:
-                by_e[e] = c
-
-        # 2) sort by e asc
-        sorted_pts = sorted(((c, e) for e, c in by_e.items()), key=lambda t: t[1])
-
-        # 3) scan to keep strictly improving c
-        pruned = []
-        best_c = float("-inf")
-        for c, e in sorted_pts:
-            if c > best_c:
-                pruned.append([c, e])
-                best_c = c
-
-        self.pareto_points = pruned
-
-
+        
     def write_pareto_points(self):
-        out_dir = os.path.join(self.inp.filename, "results", "pareto_points")
+        out_dir = os.path.join(self.inp.filename, "results", f"I_{self.enc.inp.max_nodes}_int_nodes_{self.enc._int_tag}", "pareto_points")
         os.makedirs(out_dir, exist_ok=True)
         fn = f"pareto_points_I{self.inp.max_nodes}_C{self.inp.c_max}.csv"
         with open(os.path.join(out_dir, fn), "w", newline="") as f:
             w = csv.writer(f)
             w.writerow(["c", "e"])
-            for c, e in self.pareto_points:
+            for c, e, _ in self.pareto_points:
                 w.writerow([c, e])
 
     def plot_pareto_points(self):
-        out_dir = os.path.join(self.inp.filename, "results", "pareto_curves")
+        out_dir = os.path.join(self.inp.filename, "results", f"I_{self.enc.inp.max_nodes}_int_nodes_{self.enc._int_tag}", "pareto_curves")
         os.makedirs(out_dir, exist_ok=True)
-        xs = [c for c, _ in self.pareto_points]
-        ys = [e for _, e in self.pareto_points]
+        xs = [c for c, _,_ in self.pareto_points]
+        ys = [e for _, e,_ in self.pareto_points]
         plt.figure()
         plt.plot(xs, ys, marker="o")
         plt.xlabel("Correctness")
@@ -224,10 +129,19 @@ class Pareto_Points:
         plt.savefig(os.path.join(out_dir, fn), dpi=300, bbox_inches="tight")
         plt.close()
 
+    def cumulate_pareto_points(self):
+        self.find_pareto_points(None, None, None, None)
+        self.clean_pareto_points()
+        self.write_pareto_points()
+        self.plot_pareto_points()
+
 def main():
-    pp_ = Input("examples/wine",2)
-    pp = Pareto_Points(pp_,{0},0)
-    pp.find_pareto_points()
+    start = time.perf_counter()
+    pp_ = Input("examples/wine",3)
+    pp = Pareto_Points("examples/wine",1,{0},0)
+    pp.cumulate_pareto_points()
+    end = time.perf_counter()
+    print(f"Elapsed: {end - start:.2f} s")
 
 if __name__ == "__main__":
     main()
