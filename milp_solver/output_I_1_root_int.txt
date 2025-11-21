@@ -1,91 +1,107 @@
 Set parameter Username
-Set parameter LicenseID to value 2716274
-Academic license - for non-commercial use only - expires 2026-09-30
+Set parameter LicenseID to value 2741331
+Academic license - for non-commercial use only - expires 2026-11-19
 -----------------------------------------------------------------
 e_l=None, e_u=None, c_l=None, c_u=None
 Inside the find_pareto_points function
-Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+Gurobi Optimizer version 11.0.3 build v11.0.3rc0 (linux64 - "Ubuntu 20.04.6 LTS")
 
-CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
-Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
+CPU model: Intel(R) Xeon(R) CPU E5-2660 v2 @ 2.20GHz, instruction set [SSE2|AVX]
+Thread count: 20 physical cores, 40 logical processors, using up to 20 threads
 
-Optimize a model with 12854 rows, 3591 columns and 36983 nonzeros
-Model fingerprint: 0xfc3d6166
-Variable types: 3576 continuous, 15 integer (0 binary)
+Optimize a model with 12905 rows, 3601 columns and 38083 nonzeros
+Model fingerprint: 0x302c92e1
+Variable types: 3581 continuous, 20 integer (0 binary)
 Coefficient statistics:
   Matrix range     [1e+00, 4e+00]
   Objective range  [1e+00, 4e+00]
   Bounds range     [1e+00, 1e+00]
   RHS range        [1e+00, 1e+03]
-Presolve removed 12749 rows and 3542 columns
-Presolve time: 0.05s
-Presolved: 105 rows, 49 columns, 345 nonzeros
-Variable types: 0 continuous, 49 integer (49 binary)
+Presolve removed 11298 rows and 3009 columns
+Presolve time: 0.29s
+Presolved: 1607 rows, 592 columns, 5830 nonzeros
+Variable types: 0 continuous, 592 integer (592 binary)
+Found heuristic solution: objective 35.0000000
+Found heuristic solution: objective 51.0000000
 Found heuristic solution: objective 93.0000000
-Found heuristic solution: objective 111.0000000
-Found heuristic solution: objective 122.0000000
 
-Root relaxation: objective 1.312500e+02, 63 iterations, 0.00 seconds (0.00 work units)
+Root relaxation: objective 1.458333e+02, 965 iterations, 0.08 seconds (0.04 work units)
 
     Nodes    |    Current Node    |     Objective Bounds      |     Work
  Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
 
-     0     0 infeasible    0       122.00000  122.00000  0.00%     -    0s
+     0     0  145.83333    0  525   93.00000  145.83333  56.8%     -    0s
+H    0     0                     118.0000000  145.83333  23.6%     -    0s
+H    0     0                     129.0000000  145.83333  13.0%     -    0s
+     0     0  139.53846    0  530  129.00000  139.53846  8.17%     -    0s
+     0     0  135.83333    0  412  129.00000  135.83333  5.30%     -    0s
 
-Explored 1 nodes (63 simplex iterations) in 0.07 seconds (0.04 work units)
-Thread count was 32 (of 256 available processors)
+Cutting planes:
+  Gomory: 1
+  Clique: 64
+  Zero half: 74
+  RLT: 29
+  BQP: 5
 
-Solution count 3: 122 111 93 
+Explored 1 nodes (1168 simplex iterations) in 0.74 seconds (0.22 work units)
+Thread count was 20 (of 40 available processors)
+
+Solution count 5: 129 118 93 ... 35
 
 Optimal solution found (tolerance 1.00e-04)
-Best objective 1.220000000000e+02, best bound 1.220000000000e+02, gap 0.0000%
-lam[0,0] = 1.0
+Best objective 1.290000000000e+02, best bound 1.290000000000e+02, gap 0.0000%
+lam[0,0] = -0.0
 lam[0,1] = -0.0
 lam[0,2] = -0.0
+lam[0,3] = -0.0
+lam[0,4] = -0.0
+lam[0,5] = -0.0
+lam[0,6] = 1.0
+lam[0,7] = -0.0
 tau[0,0,L0] = -0.0
 tau[0,0,L1] = 1.0
 tau[0,0,L2] = -0.0
 tau[0,1,L0] = 1.0
 tau[0,1,L1] = -0.0
 tau[0,1,L2] = -0.0
-tau[0,2,L0] = 1.0
+tau[0,2,L0] = -0.0
 tau[0,2,L1] = -0.0
-tau[0,2,L2] = -0.0
-tau[0,3,L0] = 1.0
-tau[0,3,L1] = -0.0
-tau[0,3,L2] = -0.0
+tau[0,2,L2] = 1.0
+tau[0,3,L0] = 0.0
+tau[0,3,L1] = 0.0
+tau[0,3,L2] = 1.0
 m[0,0] = 1.0
 m[0,1] = 1.0
 m[0,2] = 1.0
-m[0,3] = 1.0
+m[0,3] = -0.0
 m[0,4] = 1.0
-m[0,5] = 1.0
+m[0,5] = -0.0
 m[0,6] = 1.0
 m[0,7] = 1.0
 m[0,8] = 1.0
-m[0,9] = 1.0
+m[0,9] = -0.0
 m[0,10] = 1.0
 m[0,11] = 1.0
 m[0,12] = 1.0
 m[0,13] = 1.0
-m[0,14] = 1.0
-m[0,15] = 1.0
-m[0,16] = 1.0
-m[0,17] = 1.0
-m[0,18] = 1.0
+m[0,14] = -0.0
+m[0,15] = -0.0
+m[0,16] = -0.0
+m[0,17] = -0.0
+m[0,18] = 0.0
 m[0,19] = 1.0
 m[0,20] = 1.0
 m[0,21] = 1.0
 m[0,22] = 1.0
-m[0,23] = -0.0
-m[0,24] = 1.0
-m[0,25] = 1.0
+m[0,23] = 1.0
+m[0,24] = -0.0
+m[0,25] = -0.0
 m[0,26] = 1.0
 m[0,27] = 1.0
 m[0,28] = 1.0
 m[0,29] = 1.0
 m[0,30] = 1.0
-m[0,31] = 1.0
+m[0,31] = -0.0
 m[0,32] = 1.0
 m[0,33] = 1.0
 m[0,34] = 1.0
@@ -102,40 +118,40 @@ m[0,44] = 1.0
 m[0,45] = 1.0
 m[0,46] = 1.0
 m[0,47] = 1.0
-m[0,48] = 1.0
-m[0,49] = 1.0
-m[0,50] = 1.0
+m[0,48] = 0.0
+m[0,49] = 0.0
+m[0,50] = -0.0
 m[0,51] = 1.0
-m[0,52] = 1.0
-m[0,53] = 1.0
+m[0,52] = 0.0
+m[0,53] = 0.0
 m[0,54] = 1.0
-m[0,55] = 1.0
-m[0,56] = 1.0
+m[0,55] = 0.0
+m[0,56] = -0.0
 m[0,57] = 1.0
-m[0,58] = 1.0
+m[0,58] = -0.0
 m[0,59] = 1.0
 m[0,60] = 1.0
-m[0,61] = 1.0
+m[0,61] = -0.0
 m[0,62] = -0.0
-m[0,63] = 1.0
+m[0,63] = -0.0
 m[0,64] = 1.0
-m[0,65] = 1.0
+m[0,65] = -0.0
 m[0,66] = -0.0
-m[0,67] = 1.0
-m[0,68] = 0.0
+m[0,67] = -0.0
+m[0,68] = 1.0
 m[0,69] = 1.0
 m[0,70] = 1.0
-m[0,71] = -0.0
-m[0,72] = 0.0
-m[0,73] = -0.0
+m[0,71] = 1.0
+m[0,72] = -0.0
+m[0,73] = 1.0
 m[0,74] = 1.0
-m[0,75] = 1.0
-m[0,76] = 0.0
+m[0,75] = -0.0
+m[0,76] = -0.0
 m[0,77] = 1.0
 m[0,78] = 1.0
 m[0,79] = 1.0
 m[0,80] = 1.0
-m[0,81] = 1.0
+m[0,81] = -0.0
 m[0,82] = 1.0
 m[0,83] = -0.0
 m[0,84] = 1.0
@@ -152,7 +168,7 @@ m[0,94] = 1.0
 m[0,95] = 1.0
 m[0,96] = 1.0
 m[0,97] = 1.0
-m[0,98] = 1.0
+m[0,98] = 0.0
 m[0,99] = 1.0
 m[0,100] = 1.0
 m[0,101] = 1.0
@@ -166,7 +182,7 @@ m[0,108] = 1.0
 m[0,109] = 1.0
 m[0,110] = 1.0
 m[0,111] = 1.0
-m[0,112] = 1.0
+m[0,112] = -0.0
 m[0,113] = 1.0
 m[0,114] = 1.0
 m[0,115] = 1.0
@@ -175,822 +191,56 @@ m[0,117] = 1.0
 m[0,118] = 1.0
 m[0,119] = 1.0
 m[0,120] = 1.0
-m[0,121] = 1.0
+m[0,121] = -0.0
 m[0,122] = 1.0
-m[0,123] = 0.0
+m[0,123] = 1.0
 m[0,124] = 1.0
 m[0,125] = 1.0
 m[0,126] = 1.0
 m[0,127] = 1.0
 m[0,128] = 1.0
 m[0,129] = 1.0
-m[0,130] = 0.0
+m[0,130] = -0.0
 m[0,131] = -0.0
 m[0,132] = 0.0
 m[0,133] = 0.0
-m[0,134] = 0.0
-m[0,135] = 0.0
-m[0,136] = 0.0
-m[0,137] = 0.0
+m[0,134] = -0.0
+m[0,135] = 1.0
+m[0,136] = -0.0
+m[0,137] = -0.0
 m[0,138] = -0.0
-m[0,139] = 0.0
+m[0,139] = -0.0
 m[0,140] = -0.0
-m[0,141] = 0.0
+m[0,141] = -0.0
 m[0,142] = 0.0
 m[0,143] = 0.0
-m[0,144] = 0.0
-m[0,145] = 0.0
-m[0,146] = -0.0
-m[0,147] = 0.0
-m[0,148] = 0.0
-m[0,149] = 0.0
-m[0,150] = 0.0
-m[0,151] = 0.0
-m[0,152] = -0.0
-m[0,153] = 0.0
-m[0,154] = 0.0
-m[0,155] = 0.0
-m[0,156] = 0.0
-m[0,157] = 0.0
-m[0,158] = -0.0
-m[0,159] = -0.0
-m[0,160] = 0.0
-m[0,161] = 0.0
-m[0,162] = 0.0
-m[0,163] = 0.0
-m[0,164] = 0.0
-m[0,165] = 0.0
-m[0,166] = 0.0
-m[0,167] = 0.0
-m[0,168] = 0.0
-m[0,169] = 0.0
-m[0,170] = 0.0
-m[0,171] = 0.0
-m[0,172] = 0.0
-m[0,173] = 0.0
-m[0,174] = 0.0
-m[0,175] = 0.0
-m[0,176] = 0.0
-m[0,177] = 0.0
-m[L0,0] = 1.0
-m[L0,1] = 1.0
-m[L0,2] = 1.0
-m[L0,3] = 1.0
-m[L0,4] = 1.0
-m[L0,5] = 1.0
-m[L0,6] = 1.0
-m[L0,7] = 1.0
-m[L0,8] = 1.0
-m[L0,9] = 1.0
-m[L0,10] = 1.0
-m[L0,11] = 1.0
-m[L0,12] = 1.0
-m[L0,13] = 1.0
-m[L0,14] = 1.0
-m[L0,15] = 1.0
-m[L0,16] = 1.0
-m[L0,17] = 1.0
-m[L0,18] = 1.0
-m[L0,19] = 1.0
-m[L0,20] = 1.0
-m[L0,21] = 1.0
-m[L0,22] = 1.0
-m[L0,23] = 1.0
-m[L0,24] = 1.0
-m[L0,25] = 1.0
-m[L0,26] = 1.0
-m[L0,27] = 1.0
-m[L0,28] = 1.0
-m[L0,29] = 1.0
-m[L0,30] = 1.0
-m[L0,31] = 1.0
-m[L0,32] = 1.0
-m[L0,33] = 1.0
-m[L0,34] = 1.0
-m[L0,35] = 1.0
-m[L0,36] = 1.0
-m[L0,37] = 1.0
-m[L0,38] = 1.0
-m[L0,39] = 1.0
-m[L0,40] = 1.0
-m[L0,41] = 1.0
-m[L0,42] = 1.0
-m[L0,43] = 1.0
-m[L0,44] = 1.0
-m[L0,45] = 1.0
-m[L0,46] = 1.0
-m[L0,47] = 1.0
-m[L0,48] = 1.0
-m[L0,49] = 1.0
-m[L0,50] = 1.0
-m[L0,51] = 1.0
-m[L0,52] = 1.0
-m[L0,53] = 1.0
-m[L0,54] = 1.0
-m[L0,55] = 1.0
-m[L0,56] = 1.0
-m[L0,57] = 1.0
-m[L0,58] = 1.0
-m[L0,59] = 0.0
-m[L0,60] = 0.0
-m[L0,61] = 0.0
-m[L0,62] = 0.0
-m[L0,63] = 0.0
-m[L0,64] = 0.0
-m[L0,65] = 0.0
-m[L0,66] = 0.0
-m[L0,67] = 0.0
-m[L0,68] = 0.0
-m[L0,69] = 0.0
-m[L0,70] = 0.0
-m[L0,71] = 0.0
-m[L0,72] = 0.0
-m[L0,73] = 0.0
-m[L0,74] = 0.0
-m[L0,75] = 0.0
-m[L0,76] = 0.0
-m[L0,77] = 0.0
-m[L0,78] = 0.0
-m[L0,79] = 0.0
-m[L0,80] = 0.0
-m[L0,81] = 0.0
-m[L0,82] = 0.0
-m[L0,83] = 0.0
-m[L0,84] = 0.0
-m[L0,85] = 0.0
-m[L0,86] = 0.0
-m[L0,87] = 0.0
-m[L0,88] = 0.0
-m[L0,89] = 0.0
-m[L0,90] = 0.0
-m[L0,91] = 0.0
-m[L0,92] = 0.0
-m[L0,93] = 0.0
-m[L0,94] = 0.0
-m[L0,95] = 0.0
-m[L0,96] = 0.0
-m[L0,97] = 0.0
-m[L0,98] = 0.0
-m[L0,99] = 0.0
-m[L0,100] = 0.0
-m[L0,101] = 0.0
-m[L0,102] = 0.0
-m[L0,103] = 0.0
-m[L0,104] = 0.0
-m[L0,105] = 0.0
-m[L0,106] = 0.0
-m[L0,107] = 0.0
-m[L0,108] = 0.0
-m[L0,109] = 0.0
-m[L0,110] = 0.0
-m[L0,111] = 0.0
-m[L0,112] = 0.0
-m[L0,113] = 0.0
-m[L0,114] = 0.0
-m[L0,115] = 0.0
-m[L0,116] = 0.0
-m[L0,117] = 0.0
-m[L0,118] = 0.0
-m[L0,119] = 0.0
-m[L0,120] = 0.0
-m[L0,121] = 0.0
-m[L0,122] = 0.0
-m[L0,123] = 0.0
-m[L0,124] = 0.0
-m[L0,125] = 0.0
-m[L0,126] = 0.0
-m[L0,127] = 0.0
-m[L0,128] = 0.0
-m[L0,129] = 0.0
-m[L0,130] = 0.0
-m[L0,131] = 0.0
-m[L0,132] = 0.0
-m[L0,133] = 0.0
-m[L0,134] = 0.0
-m[L0,135] = 0.0
-m[L0,136] = 0.0
-m[L0,137] = 0.0
-m[L0,138] = 0.0
-m[L0,139] = 0.0
-m[L0,140] = 0.0
-m[L0,141] = 0.0
-m[L0,142] = 0.0
-m[L0,143] = 0.0
-m[L0,144] = 0.0
-m[L0,145] = 0.0
-m[L0,146] = 0.0
-m[L0,147] = 0.0
-m[L0,148] = 0.0
-m[L0,149] = 0.0
-m[L0,150] = 0.0
-m[L0,151] = 0.0
-m[L0,152] = 0.0
-m[L0,153] = 0.0
-m[L0,154] = 0.0
-m[L0,155] = 0.0
-m[L0,156] = 0.0
-m[L0,157] = 0.0
-m[L0,158] = 0.0
-m[L0,159] = 0.0
-m[L0,160] = 0.0
-m[L0,161] = 0.0
-m[L0,162] = 0.0
-m[L0,163] = 0.0
-m[L0,164] = 0.0
-m[L0,165] = 0.0
-m[L0,166] = 0.0
-m[L0,167] = 0.0
-m[L0,168] = 0.0
-m[L0,169] = 0.0
-m[L0,170] = 0.0
-m[L0,171] = 0.0
-m[L0,172] = 0.0
-m[L0,173] = 0.0
-m[L0,174] = 0.0
-m[L0,175] = 0.0
-m[L0,176] = 0.0
-m[L0,177] = 0.0
-m[L1,0] = 0.0
-m[L1,1] = 0.0
-m[L1,2] = 0.0
-m[L1,3] = 0.0
-m[L1,4] = 0.0
-m[L1,5] = 0.0
-m[L1,6] = 0.0
-m[L1,7] = 0.0
-m[L1,8] = 0.0
-m[L1,9] = 0.0
-m[L1,10] = 0.0
-m[L1,11] = 0.0
-m[L1,12] = 0.0
-m[L1,13] = 0.0
-m[L1,14] = 0.0
-m[L1,15] = 0.0
-m[L1,16] = 0.0
-m[L1,17] = 0.0
-m[L1,18] = 0.0
-m[L1,19] = 0.0
-m[L1,20] = 0.0
-m[L1,21] = 0.0
-m[L1,22] = 0.0
-m[L1,23] = 0.0
-m[L1,24] = 0.0
-m[L1,25] = 0.0
-m[L1,26] = 0.0
-m[L1,27] = 0.0
-m[L1,28] = 0.0
-m[L1,29] = 0.0
-m[L1,30] = 0.0
-m[L1,31] = 0.0
-m[L1,32] = 0.0
-m[L1,33] = 0.0
-m[L1,34] = 0.0
-m[L1,35] = 0.0
-m[L1,36] = 0.0
-m[L1,37] = 0.0
-m[L1,38] = 0.0
-m[L1,39] = 0.0
-m[L1,40] = 0.0
-m[L1,41] = 0.0
-m[L1,42] = 0.0
-m[L1,43] = 0.0
-m[L1,44] = 0.0
-m[L1,45] = 0.0
-m[L1,46] = 0.0
-m[L1,47] = 0.0
-m[L1,48] = 0.0
-m[L1,49] = 0.0
-m[L1,50] = 0.0
-m[L1,51] = 0.0
-m[L1,52] = 0.0
-m[L1,53] = 0.0
-m[L1,54] = 0.0
-m[L1,55] = 0.0
-m[L1,56] = 0.0
-m[L1,57] = 0.0
-m[L1,58] = 0.0
-m[L1,59] = 1.0
-m[L1,60] = 1.0
-m[L1,61] = 1.0
-m[L1,62] = 1.0
-m[L1,63] = 1.0
-m[L1,64] = 1.0
-m[L1,65] = 1.0
-m[L1,66] = 1.0
-m[L1,67] = 1.0
-m[L1,68] = 1.0
-m[L1,69] = 1.0
-m[L1,70] = 1.0
-m[L1,71] = 1.0
-m[L1,72] = 1.0
-m[L1,73] = 1.0
-m[L1,74] = 1.0
-m[L1,75] = 1.0
-m[L1,76] = 1.0
-m[L1,77] = 1.0
-m[L1,78] = 1.0
-m[L1,79] = 1.0
-m[L1,80] = 1.0
-m[L1,81] = 1.0
-m[L1,82] = 1.0
-m[L1,83] = 1.0
-m[L1,84] = 1.0
-m[L1,85] = 1.0
-m[L1,86] = 1.0
-m[L1,87] = 1.0
-m[L1,88] = 1.0
-m[L1,89] = 1.0
-m[L1,90] = 1.0
-m[L1,91] = 1.0
-m[L1,92] = 1.0
-m[L1,93] = 1.0
-m[L1,94] = 1.0
-m[L1,95] = 1.0
-m[L1,96] = 1.0
-m[L1,97] = 1.0
-m[L1,98] = 1.0
-m[L1,99] = 1.0
-m[L1,100] = 1.0
-m[L1,101] = 1.0
-m[L1,102] = 1.0
-m[L1,103] = 1.0
-m[L1,104] = 1.0
-m[L1,105] = 1.0
-m[L1,106] = 1.0
-m[L1,107] = 1.0
-m[L1,108] = 1.0
-m[L1,109] = 1.0
-m[L1,110] = 1.0
-m[L1,111] = 1.0
-m[L1,112] = 1.0
-m[L1,113] = 1.0
-m[L1,114] = 1.0
-m[L1,115] = 1.0
-m[L1,116] = 1.0
-m[L1,117] = 1.0
-m[L1,118] = 1.0
-m[L1,119] = 1.0
-m[L1,120] = 1.0
-m[L1,121] = 1.0
-m[L1,122] = 1.0
-m[L1,123] = 1.0
-m[L1,124] = 1.0
-m[L1,125] = 1.0
-m[L1,126] = 1.0
-m[L1,127] = 1.0
-m[L1,128] = 1.0
-m[L1,129] = 1.0
-m[L1,130] = 0.0
-m[L1,131] = 0.0
-m[L1,132] = 0.0
-m[L1,133] = 0.0
-m[L1,134] = 0.0
-m[L1,135] = 0.0
-m[L1,136] = 0.0
-m[L1,137] = 0.0
-m[L1,138] = 0.0
-m[L1,139] = 0.0
-m[L1,140] = 0.0
-m[L1,141] = 0.0
-m[L1,142] = 0.0
-m[L1,143] = 0.0
-m[L1,144] = 0.0
-m[L1,145] = 0.0
-m[L1,146] = 0.0
-m[L1,147] = 0.0
-m[L1,148] = 0.0
-m[L1,149] = 0.0
-m[L1,150] = 0.0
-m[L1,151] = 0.0
-m[L1,152] = 0.0
-m[L1,153] = 0.0
-m[L1,154] = 0.0
-m[L1,155] = 0.0
-m[L1,156] = 0.0
-m[L1,157] = 0.0
-m[L1,158] = 0.0
-m[L1,159] = 0.0
-m[L1,160] = 0.0
-m[L1,161] = 0.0
-m[L1,162] = 0.0
-m[L1,163] = 0.0
-m[L1,164] = 0.0
-m[L1,165] = 0.0
-m[L1,166] = 0.0
-m[L1,167] = 0.0
-m[L1,168] = 0.0
-m[L1,169] = 0.0
-m[L1,170] = 0.0
-m[L1,171] = 0.0
-m[L1,172] = 0.0
-m[L1,173] = 0.0
-m[L1,174] = 0.0
-m[L1,175] = 0.0
-m[L1,176] = 0.0
-m[L1,177] = 0.0
-m[L2,0] = 0.0
-m[L2,1] = 0.0
-m[L2,2] = 0.0
-m[L2,3] = 0.0
-m[L2,4] = 0.0
-m[L2,5] = 0.0
-m[L2,6] = 0.0
-m[L2,7] = 0.0
-m[L2,8] = 0.0
-m[L2,9] = 0.0
-m[L2,10] = 0.0
-m[L2,11] = 0.0
-m[L2,12] = 0.0
-m[L2,13] = 0.0
-m[L2,14] = 0.0
-m[L2,15] = 0.0
-m[L2,16] = 0.0
-m[L2,17] = 0.0
-m[L2,18] = 0.0
-m[L2,19] = 0.0
-m[L2,20] = 0.0
-m[L2,21] = 0.0
-m[L2,22] = 0.0
-m[L2,23] = 0.0
-m[L2,24] = 0.0
-m[L2,25] = 0.0
-m[L2,26] = 0.0
-m[L2,27] = 0.0
-m[L2,28] = 0.0
-m[L2,29] = 0.0
-m[L2,30] = 0.0
-m[L2,31] = 0.0
-m[L2,32] = 0.0
-m[L2,33] = 0.0
-m[L2,34] = 0.0
-m[L2,35] = 0.0
-m[L2,36] = 0.0
-m[L2,37] = 0.0
-m[L2,38] = 0.0
-m[L2,39] = 0.0
-m[L2,40] = 0.0
-m[L2,41] = 0.0
-m[L2,42] = 0.0
-m[L2,43] = 0.0
-m[L2,44] = 0.0
-m[L2,45] = 0.0
-m[L2,46] = 0.0
-m[L2,47] = 0.0
-m[L2,48] = 0.0
-m[L2,49] = 0.0
-m[L2,50] = 0.0
-m[L2,51] = 0.0
-m[L2,52] = 0.0
-m[L2,53] = 0.0
-m[L2,54] = 0.0
-m[L2,55] = 0.0
-m[L2,56] = 0.0
-m[L2,57] = 0.0
-m[L2,58] = 0.0
-m[L2,59] = 0.0
-m[L2,60] = 0.0
-m[L2,61] = 0.0
-m[L2,62] = 0.0
-m[L2,63] = 0.0
-m[L2,64] = 0.0
-m[L2,65] = 0.0
-m[L2,66] = 0.0
-m[L2,67] = 0.0
-m[L2,68] = 0.0
-m[L2,69] = 0.0
-m[L2,70] = 0.0
-m[L2,71] = 0.0
-m[L2,72] = 0.0
-m[L2,73] = 0.0
-m[L2,74] = 0.0
-m[L2,75] = 0.0
-m[L2,76] = 0.0
-m[L2,77] = 0.0
-m[L2,78] = 0.0
-m[L2,79] = 0.0
-m[L2,80] = 0.0
-m[L2,81] = 0.0
-m[L2,82] = 0.0
-m[L2,83] = 0.0
-m[L2,84] = 0.0
-m[L2,85] = 0.0
-m[L2,86] = 0.0
-m[L2,87] = 0.0
-m[L2,88] = 0.0
-m[L2,89] = 0.0
-m[L2,90] = 0.0
-m[L2,91] = 0.0
-m[L2,92] = 0.0
-m[L2,93] = 0.0
-m[L2,94] = 0.0
-m[L2,95] = 0.0
-m[L2,96] = 0.0
-m[L2,97] = 0.0
-m[L2,98] = 0.0
-m[L2,99] = 0.0
-m[L2,100] = 0.0
-m[L2,101] = 0.0
-m[L2,102] = 0.0
-m[L2,103] = 0.0
-m[L2,104] = 0.0
-m[L2,105] = 0.0
-m[L2,106] = 0.0
-m[L2,107] = 0.0
-m[L2,108] = 0.0
-m[L2,109] = 0.0
-m[L2,110] = 0.0
-m[L2,111] = 0.0
-m[L2,112] = 0.0
-m[L2,113] = 0.0
-m[L2,114] = 0.0
-m[L2,115] = 0.0
-m[L2,116] = 0.0
-m[L2,117] = 0.0
-m[L2,118] = 0.0
-m[L2,119] = 0.0
-m[L2,120] = 0.0
-m[L2,121] = 0.0
-m[L2,122] = 0.0
-m[L2,123] = 0.0
-m[L2,124] = 0.0
-m[L2,125] = 0.0
-m[L2,126] = 0.0
-m[L2,127] = 0.0
-m[L2,128] = 0.0
-m[L2,129] = 0.0
-m[L2,130] = 1.0
-m[L2,131] = 1.0
-m[L2,132] = 1.0
-m[L2,133] = 1.0
-m[L2,134] = 1.0
-m[L2,135] = 1.0
-m[L2,136] = 1.0
-m[L2,137] = 1.0
-m[L2,138] = 1.0
-m[L2,139] = 1.0
-m[L2,140] = 1.0
-m[L2,141] = 1.0
-m[L2,142] = 1.0
-m[L2,143] = 1.0
-m[L2,144] = 1.0
-m[L2,145] = 1.0
-m[L2,146] = 1.0
-m[L2,147] = 1.0
-m[L2,148] = 1.0
-m[L2,149] = 1.0
-m[L2,150] = 1.0
-m[L2,151] = 1.0
-m[L2,152] = 1.0
-m[L2,153] = 1.0
-m[L2,154] = 1.0
-m[L2,155] = 1.0
-m[L2,156] = 1.0
-m[L2,157] = 1.0
-m[L2,158] = 1.0
-m[L2,159] = 1.0
-m[L2,160] = 1.0
-m[L2,161] = 1.0
-m[L2,162] = 1.0
-m[L2,163] = 1.0
-m[L2,164] = 1.0
-m[L2,165] = 1.0
-m[L2,166] = 1.0
-m[L2,167] = 1.0
-m[L2,168] = 1.0
-m[L2,169] = 1.0
-m[L2,170] = 1.0
-m[L2,171] = 1.0
-m[L2,172] = 1.0
-m[L2,173] = 1.0
-m[L2,174] = 1.0
-m[L2,175] = 1.0
-m[L2,176] = 1.0
-m[L2,177] = 1.0
-u[0] = 1.0
-o_u[0,0] = 1.0
-o_u[0,1] = 0.0
-o_u[0,2] = 0.0
-Solving done
---------------------
-c=0.6741573033707865, e=2.0
-Appending to pareto_points list
-Searching solutions with greater explainability with e_u None
------------------------------------------------------------------
-e_l=3.0, e_u=None, c_l=None, c_u=0.6685393258426966
-Inside the find_pareto_points function
-Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
-
-CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
-Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
-
-Optimize a model with 12856 rows, 3591 columns and 37165 nonzeros
-Model fingerprint: 0xab108930
-Variable types: 3576 continuous, 15 integer (0 binary)
-Coefficient statistics:
-  Matrix range     [1e+00, 4e+00]
-  Objective range  [1e+00, 4e+00]
-  Bounds range     [1e+00, 1e+00]
-  RHS range        [1e+00, 1e+03]
-
-MIP start from previous solve did not produce a new incumbent solution
-
-Presolve removed 12856 rows and 3591 columns
-Presolve time: 0.02s
-Presolve: All rows and columns removed
-
-Explored 0 nodes (0 simplex iterations) in 0.03 seconds (0.02 work units)
-Thread count was 1 (of 256 available processors)
-
-Solution count 1: 111 
-
-Optimal solution found (tolerance 1.00e-04)
-Best objective 1.110000000000e+02, best bound 1.110000000000e+02, gap 0.0000%
-lam[0,0] = 0.0
-lam[0,1] = 1.0
-lam[0,2] = 0.0
-tau[0,0,L0] = 0.0
-tau[0,0,L1] = 1.0
-tau[0,0,L2] = -0.0
-tau[0,1,L0] = 1.0
-tau[0,1,L1] = -0.0
-tau[0,1,L2] = 0.0
-tau[0,2,L0] = 0.0
-tau[0,2,L1] = -0.0
-tau[0,2,L2] = 1.0
-tau[0,3,L0] = 0.0
-tau[0,3,L1] = 0.0
-tau[0,3,L2] = 0.0
-m[0,0] = 1.0
-m[0,1] = 1.0
-m[0,2] = 0.0
-m[0,3] = 0.0
-m[0,4] = 0.0
-m[0,5] = 1.0
-m[0,6] = 1.0
-m[0,7] = 0.0
-m[0,8] = 0.0
-m[0,9] = 0.0
-m[0,10] = 0.0
-m[0,11] = 0.0
-m[0,12] = 1.0
-m[0,13] = 1.0
-m[0,14] = 1.0
-m[0,15] = 1.0
-m[0,16] = 1.0
-m[0,17] = 0.0
-m[0,18] = 0.0
-m[0,19] = 0.0
-m[0,20] = 0.0
-m[0,21] = 0.0
-m[0,22] = 1.0
-m[0,23] = 0.0
-m[0,24] = 1.0
-m[0,25] = 0.0
-m[0,26] = 1.0
-m[0,27] = 1.0
-m[0,28] = 1.0
-m[0,29] = 0.0
-m[0,30] = 0.0
-m[0,31] = 0.0
-m[0,32] = 1.0
-m[0,33] = 0.0
-m[0,34] = 1.0
-m[0,35] = 1.0
-m[0,36] = 0.0
-m[0,37] = 0.0
-m[0,38] = 0.0
-m[0,39] = 0.0
-m[0,40] = 1.0
-m[0,41] = 0.0
-m[0,42] = 1.0
-m[0,43] = 0.0
-m[0,44] = 1.0
-m[0,45] = 0.0
-m[0,46] = 0.0
-m[0,47] = 0.0
-m[0,48] = 0.0
-m[0,49] = 1.0
-m[0,50] = 1.0
-m[0,51] = 0.0
-m[0,52] = 1.0
-m[0,53] = 1.0
-m[0,54] = 0.0
-m[0,55] = 1.0
-m[0,56] = 1.0
-m[0,57] = 0.0
-m[0,58] = 0.0
-m[0,59] = 1.0
-m[0,60] = 1.0
-m[0,61] = 1.0
-m[0,62] = 1.0
-m[0,63] = 1.0
-m[0,64] = 1.0
-m[0,65] = 1.0
-m[0,66] = 1.0
-m[0,67] = 1.0
-m[0,68] = 1.0
-m[0,69] = 1.0
-m[0,70] = 1.0
-m[0,71] = 1.0
-m[0,72] = 1.0
-m[0,73] = 1.0
-m[0,74] = 1.0
-m[0,75] = 0.0
-m[0,76] = 1.0
-m[0,77] = 0.0
-m[0,78] = 1.0
-m[0,79] = 0.0
-m[0,80] = 1.0
-m[0,81] = 0.0
-m[0,82] = 1.0
-m[0,83] = 0.0
-m[0,84] = 1.0
-m[0,85] = 1.0
-m[0,86] = 1.0
-m[0,87] = 1.0
-m[0,88] = 0.0
-m[0,89] = 1.0
-m[0,90] = 0.0
-m[0,91] = 1.0
-m[0,92] = 1.0
-m[0,93] = 0.0
-m[0,94] = 0.0
-m[0,95] = 1.0
-m[0,96] = 0.0
-m[0,97] = 1.0
-m[0,98] = 1.0
-m[0,99] = 0.0
-m[0,100] = 0.0
-m[0,101] = 1.0
-m[0,102] = 0.0
-m[0,103] = 0.0
-m[0,104] = 0.0
-m[0,105] = 0.0
-m[0,106] = 0.0
-m[0,107] = 0.0
-m[0,108] = 1.0
-m[0,109] = 1.0
-m[0,110] = 0.0
-m[0,111] = 0.0
-m[0,112] = 0.0
-m[0,113] = 1.0
-m[0,114] = 1.0
-m[0,115] = 1.0
-m[0,116] = 1.0
-m[0,117] = 1.0
-m[0,118] = 0.0
-m[0,119] = 0.0
-m[0,120] = 0.0
-m[0,121] = 0.0
-m[0,122] = 0.0
-m[0,123] = 0.0
-m[0,124] = 0.0
-m[0,125] = 0.0
-m[0,126] = 1.0
-m[0,127] = 0.0
-m[0,128] = 1.0
-m[0,129] = 0.0
-m[0,130] = 0.0
-m[0,131] = 1.0
-m[0,132] = 1.0
-m[0,133] = 1.0
-m[0,134] = 0.0
-m[0,135] = 1.0
-m[0,136] = 1.0
-m[0,137] = 1.0
-m[0,138] = 1.0
-m[0,139] = 1.0
-m[0,140] = 1.0
-m[0,141] = 1.0
-m[0,142] = 1.0
-m[0,143] = 1.0
 m[0,144] = 1.0
-m[0,145] = 1.0
-m[0,146] = 1.0
+m[0,145] = -0.0
+m[0,146] = -0.0
 m[0,147] = 1.0
 m[0,148] = 1.0
 m[0,149] = 1.0
 m[0,150] = 1.0
 m[0,151] = 1.0
-m[0,152] = 0.0
+m[0,152] = 1.0
 m[0,153] = 1.0
-m[0,154] = 0.0
+m[0,154] = 1.0
 m[0,155] = 1.0
 m[0,156] = 1.0
 m[0,157] = 1.0
-m[0,158] = 0.0
-m[0,159] = 0.0
+m[0,158] = 1.0
+m[0,159] = 1.0
 m[0,160] = 1.0
-m[0,161] = 1.0
-m[0,162] = 1.0
-m[0,163] = 1.0
+m[0,161] = 0.0
+m[0,162] = 0.0
+m[0,163] = 0.0
 m[0,164] = 1.0
 m[0,165] = 1.0
 m[0,166] = 1.0
 m[0,167] = 1.0
 m[0,168] = 1.0
 m[0,169] = 1.0
-m[0,170] = 1.0
+m[0,170] = 0.0
 m[0,171] = 1.0
 m[0,172] = 1.0
 m[0,173] = 1.0
@@ -1533,25 +783,30 @@ m[L2,175] = 1.0
 m[L2,176] = 1.0
 m[L2,177] = 1.0
 u[0] = 1.0
-o_u[0,0] = 0.0
-o_u[0,1] = 1.0
-o_u[0,2] = 0.0
+o_u[0,0] = -0.0
+o_u[0,1] = 0.0
+o_u[0,2] = -0.0
+o_u[0,3] = -0.0
+o_u[0,4] = -0.0
+o_u[0,5] = 0.0
+o_u[0,6] = 1.0
+o_u[0,7] = -0.0
 Solving done
 --------------------
-c=0.6067415730337079, e=3.0
+c=0.7078651685393258, e=3.0
 Appending to pareto_points list
 Searching solutions with greater explainability with e_u None
 -----------------------------------------------------------------
-e_l=4.0, e_u=None, c_l=None, c_u=0.601123595505618
+e_l=4.0, e_u=None, c_l=None, c_u=0.7022471910112359
 Inside the find_pareto_points function
-Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+Gurobi Optimizer version 11.0.3 build v11.0.3rc0 (linux64 - "Ubuntu 20.04.6 LTS")
 
-CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
-Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
+CPU model: Intel(R) Xeon(R) CPU E5-2660 v2 @ 2.20GHz, instruction set [SSE2|AVX]
+Thread count: 20 physical cores, 40 logical processors, using up to 20 threads
 
-Optimize a model with 12856 rows, 3591 columns and 37165 nonzeros
-Model fingerprint: 0x4248b823
-Variable types: 3576 continuous, 15 integer (0 binary)
+Optimize a model with 12907 rows, 3601 columns and 38270 nonzeros
+Model fingerprint: 0x0b780dde
+Variable types: 3581 continuous, 20 integer (0 binary)
 Coefficient statistics:
   Matrix range     [1e+00, 4e+00]
   Objective range  [1e+00, 4e+00]
@@ -1560,11 +815,11 @@ Coefficient statistics:
 
 MIP start from previous solve did not produce a new incumbent solution
 
-Presolve removed 10803 rows and 2900 columns
-Presolve time: 0.00s
+Presolve removed 10473 rows and 2769 columns
+Presolve time: 0.05s
 
-Explored 0 nodes (0 simplex iterations) in 0.01 seconds (0.01 work units)
-Thread count was 1 (of 256 available processors)
+Explored 0 nodes (0 simplex iterations) in 0.08 seconds (0.02 work units)
+Thread count was 1 (of 40 available processors)
 
 Solution count 0
 No other solutions better than -1e+100
@@ -1575,16 +830,16 @@ Solving done
 Returning because the model was infeasible
 Searching for solutions with greater correctness with e_l None
 -----------------------------------------------------------------
-e_l=None, e_u=1.0, c_l=0.6797752808988764, c_u=None
+e_l=None, e_u=2.0, c_l=0.7134831460674157, c_u=None
 Inside the find_pareto_points function
-Gurobi Optimizer version 12.0.3 build v12.0.3rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+Gurobi Optimizer version 11.0.3 build v11.0.3rc0 (linux64 - "Ubuntu 20.04.6 LTS")
 
-CPU model: AMD EPYC 7742 64-Core Processor, instruction set [SSE2|AVX|AVX2]
-Thread count: 128 physical cores, 256 logical processors, using up to 32 threads
+CPU model: Intel(R) Xeon(R) CPU E5-2660 v2 @ 2.20GHz, instruction set [SSE2|AVX]
+Thread count: 20 physical cores, 40 logical processors, using up to 20 threads
 
-Optimize a model with 12856 rows, 3591 columns and 37165 nonzeros
-Model fingerprint: 0x93e87aed
-Variable types: 3576 continuous, 15 integer (0 binary)
+Optimize a model with 12907 rows, 3601 columns and 38270 nonzeros
+Model fingerprint: 0xbedcfe9d
+Variable types: 3581 continuous, 20 integer (0 binary)
 Coefficient statistics:
   Matrix range     [1e+00, 4e+00]
   Objective range  [1e+00, 4e+00]
@@ -1593,11 +848,11 @@ Coefficient statistics:
 
 MIP start from previous solve did not produce a new incumbent solution
 
-Presolve removed 12675 rows and 3585 columns
-Presolve time: 0.01s
+Presolve removed 12341 rows and 3385 columns
+Presolve time: 0.14s
 
-Explored 0 nodes (0 simplex iterations) in 0.01 seconds (0.01 work units)
-Thread count was 1 (of 256 available processors)
+Explored 0 nodes (0 simplex iterations) in 0.17 seconds (0.06 work units)
+Thread count was 1 (of 40 available processors)
 
 Solution count 0
 No other solutions better than -1e+100
@@ -1606,4 +861,4 @@ Model is infeasible
 Best objective -, best bound -, gap -
 Solving done
 Returning because the model was infeasible
-Elapsed: 2.69 s
+Elapsed: 9.35 s

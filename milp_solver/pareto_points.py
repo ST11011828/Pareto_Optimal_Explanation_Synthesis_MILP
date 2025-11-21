@@ -1,5 +1,7 @@
 import os
 import csv
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import gurobipy as gp
 from gurobipy import GRB
@@ -10,11 +12,11 @@ from encoding import Encoding
 
 
 class Pareto_Points:
-    def __init__(self,dir_name, max_nodes, int_pos, root:int):
+    def __init__(self,dir_name, max_nodes, lam_int_nodes , tau_int_nodes , u_int_nodes, m_int_nodes, root:int):
         self.root = root
         self.inp = Input(dir_name, max_nodes)
         self.pareto_points= []
-        self.enc = Encoding(int_pos, self.inp, root)
+        self.enc = Encoding(lam_int_nodes, tau_int_nodes , u_int_nodes , m_int_nodes, self.inp, root)
 
     def find_pareto_points(self, e_l, e_u , c_l , c_u):
         if (e_l is not None and e_u is not None and e_l > e_u) or (c_l is not None and c_u is not None and c_l > c_u):
@@ -135,13 +137,29 @@ class Pareto_Points:
         self.write_pareto_points()
         self.plot_pareto_points()
 
+# def main():
+#     start = time.perf_counter()
+#     pp_ = Input("examples/wine",3)
+#     pp = Pareto_Points("examples/wine",5,{0,1,2,3,4},0)
+#     pp.cumulate_pareto_points()
+#     end = time.perf_counter()
+#     print(f"Elapsed: {end - start:.2f} s")
+
 def main():
     start = time.perf_counter()
-    pp_ = Input("examples/wine",3)
-    pp = Pareto_Points("examples/wine",1,{0},0)
+    _ = Input("examples/wine", 3)
+    pp = Pareto_Points(
+        "examples/wine", 5,
+        lam_int_nodes={0,1,2,3,4},
+        tau_int_nodes={0,1,2,3,4},
+        u_int_nodes=set(),
+        m_int_nodes=set(),
+        root=0
+    )
     pp.cumulate_pareto_points()
     end = time.perf_counter()
     print(f"Elapsed: {end - start:.2f} s")
+
 
 if __name__ == "__main__":
     main()

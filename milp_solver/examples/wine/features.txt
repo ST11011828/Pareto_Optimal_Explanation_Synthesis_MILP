@@ -1,3 +1,8 @@
+alc_minus_half_malic = alcohol - 0.5*malic_acid
+ash_plus_alk_small   = ash + 0.05*alcalinity_of_ash
+phenol_delta         = total_phenols - flavanoids
+color_tone_linear    = color_intensity + 0.8*hue
+proline_minus_mag    = proline - 1.2*magnesium
 alcohol
 malic_acid
 proline
@@ -16,3 +21,30 @@ malic_acid >= 1.94
 predicate: proline : 2 : 1
 proline <= 880
 proline > 880
+
+
+predicate: alc_minus_half_malic : 4 : 2
+alc_minus_half_malic < 12.0
+12.0 <= alc_minus_half_malic < 13.0
+13.0 <= alc_minus_half_malic < 14.0
+alc_minus_half_malic >= 14.0
+
+predicate: ash_plus_alk_small : 2 : 2
+ash_plus_alk_small < 3.0
+ash_plus_alk_small >= 3.0
+
+predicate: phenol_delta : 3 : 1
+phenol_delta < -0.2
+-0.2 <= phenol_delta < 0.6
+phenol_delta >= 0.6
+
+predicate: color_tone_linear : 4 : 3
+color_tone_linear < 4.5
+4.5 <= color_tone_linear < 7.0
+7.0 <= color_tone_linear < 9.5
+color_tone_linear >= 9.5
+
+predicate: proline_minus_mag : 3 : 2
+proline_minus_mag < 400
+400 <= proline_minus_mag < 900
+proline_minus_mag >= 900

@@ -1,6 +1,9 @@
 wine dataset
 
 datapoints - 178 
+
+features = 3
+
 internal nodes = 10
 all integers - more than 6.5 hours for a single solution
 root integer only - 53.60 seconds
@@ -40,6 +43,73 @@ root integer only - 5.53 seconds
 internal nodes = 1
 all integers - 2.01 seconds
 root integer - 2.69 seconds
+
+-------------------------------------------------------------
+
+features = 8
+
+internal nodes = 10
+all integer - TO(Timeout)
+only root + one random node integer - 4893.36 s(degenerate point)
+only root integer - 2065.46 s(degenerate point)
+all continuous - 32.32 seconds(degenerate point)
+
+internal nodes = 9
+all integer - TO(Timeout)
+only root + one random node integer - 1690.34 seconds(degenerate point)
+only root integer - 757.06 seconds(degenerate point)
+all continuous - 28.35 seconds(degenerate point)
+
+internal nodes = 8
+all integer - TO(Timeout)
+only root + one random node integer - 1388.51 seconds(degenerate point)
+only root integer - 464.88 seconds(degenerate point)
+all continuous - 24.12 seconds(degenerate point)
+
+internal nodes = 7
+all integer - TO(Timeout)
+only root + one random node integer - 632.82 seconds(degenerate point)
+only root integer - 304.75 seconds(degenerate point)
+all continuous - 20.80 seconds(degenerate point)
+
+internal nodes = 6
+all integer - TO(Timeout)
+only root + one random node integer - 779.12 seconds
+only root integer - 204.62 seconds(degenerate points)
+all continuous - 17.31 seconds(degenerate point)
+
+internal nodes = 5
+all integer - 20 hours and still not complete
+only root + one random node integer - 510.74 seconds
+only root integer - 140.13 seconds(degenerate points)
+all continuous - 14.54 seconds(degenerate point)
+
+internal nodes = 4
+all integer - 6213.63 seconds
+only root + one random node integer - 152.17 seconds
+only root integer - 134.27 seconds
+all continuous - 12.08 seconds(degenerate point)
+
+internal nodes = 3
+all integer - 355.09 seconds
+only root + one random node integer - 235.95 seconds
+only root integer - 49.18 seconds
+all continuous - 9.52 seconds(degenerate point)
+
+internal nodes = 2
+all integer - 37.23 seconds
+only root + one random node integer - 36.01 seconds
+only root integer - 38.57 seconds
+all continuous - 8.11 seconds
+
+internal nodes = 1
+all integer - 4.10 seconds
+only root + one random node integer - 4.34 seconds
+only root integer - 9.35 seconds
+all continuous - 3.89 seconds
+
+
+
 
 
 

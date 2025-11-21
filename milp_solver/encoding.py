@@ -6,7 +6,6 @@ import gurobipy as gp
 from gurobipy import GRB
 import os
 
-#NOTE: put tau00l1 is true and see what happens
 MAX_NODES = 10000
 
 def node_order(j):
@@ -29,11 +28,13 @@ samples_constraints() - adds the contraints that parse the samples on the tree f
 reachability_constraints() - adds the constraints that parse the tree for reachability
 objective() - sets the objective, optimizes the model and returns the solution
 '''
-#dump iteratively whatever you have done in a gurobi file
 class Encoding:
-    def __init__(self, int_nodes , inp:Input , root , MAX_EXPLANATION = 1037): #NOTE:give better name to int_pos
+    def __init__(self, lam_int_nodes, tau_int_nodes , u_int_nodes , m_int_nodes, inp:Input , root , MAX_EXPLANATION = 1037): #NOTE:give better name to int_pos
         self.inp = inp
-        self.int_nodes = set(int_nodes) #converting to set because it is faster to check containment in set
+        self.lam_int_nodes = set(lam_int_nodes) #converting to set because it is faster to check containment in set
+        self.tau_int_nodes = set(tau_int_nodes)
+        self.u_int_nodes = set(u_int_nodes)
+        self.m_int_nodes = set(m_int_nodes)
         self.root = root
         self.MAX_EXPLANATION = MAX_EXPLANATION 
         self.I = range(self.inp.max_nodes)
@@ -42,49 +43,66 @@ class Encoding:
         self.S = range(len(self.inp.samples.updated_samples))
         self.L = {f"L{i}":label for i,label in enumerate(self.inp.leaves)}
         self._built = False
-        self._int_tag = "none" if not self.int_nodes else "_".join(str(i) for i in sorted(self.int_nodes))
+        def _fmt(nodes):
+            return "none" if not nodes else "_".join(str(i) for i in sorted(nodes))
+        self._int_tag = (
+            f"l_{_fmt(self.lam_int_nodes)}"
+            f"_tau_{_fmt(self.tau_int_nodes)}"
+            f"_u_{_fmt(self.u_int_nodes)}"
+            f"_m_{_fmt(self.m_int_nodes)}"
+        )
+        # self._int_tag = "none" if not self.int_nodes else "_".join(str(i) for i in sorted(self.int_nodes))
         self.C_QUANT = 1.0/len(self.S)
         self.E_ROUNDING_LIMIT = 6
 
         self.model = gp.Model("pareto_points_exploration")
         lam_int = self.model.addVars(
-            ((i,p) for i in self.I if i in self.int_nodes for p in self.P) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "lam"
+            ((i,p) for i in self.I if i in self.lam_int_nodes for p in self.P) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "lam"
         )
         lam_cont = self.model.addVars(
-            ((i,p) for i in self.I if i not in self.int_nodes for p in self.P) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "lam"
+            ((i,p) for i in self.I if i not in self.lam_int_nodes for p in self.P) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "lam"
         )
         self.lam = gp.tupledict()
         self.lam.update(lam_int)
         self.lam.update(lam_cont)
         # self.lam = self.model.addVars(((i,p) for i in self.I for p in self.P), vtype=GRB.INTEGER , lb=0.0 , ub = 1.0 , name="lam")
         all_nodes = list(self.I) + list(self.L.keys())
-        tau_int_user_set = self.model.addVars(
-            ((i,c,j) for i in self.I if i in self.int_nodes
+        tau_int = self.model.addVars(
+            ((i,c,j) for i in self.I if i in self.tau_int_nodes
              for c in self.C
              for j in all_nodes if node_order(j) > i),
              vtype= GRB.INTEGER, lb=0.0, ub = 1.0, name ="tau"
         )
-        # tau_int_default = self.model.addVars(
-        #     ((i,c,j) for i in self.I if i not in self.int_nodes
-        #      for c in self.C
-        #      for j in all_nodes if node_order(j) > i and j in self.L.keys()),
-        #      vtype= GRB.BINARY, lb=0.0, ub = 1.0, name ="tau"
-        # )
         tau_cont = self.model.addVars(
-            ((i,c,j) for i in self.I if i not in self.int_nodes
-             for c in self.C
-             for j in all_nodes if node_order(j) > i ),
-             vtype= GRB.CONTINUOUS, lb=0.0, ub = 1.0, name ="tau"
+            ((i,c,j) for i in self.I if i not in self.tau_int_nodes for c in self.C for j in all_nodes if node_order(j) > i ), vtype= GRB.CONTINUOUS, lb=0.0, ub = 1.0, name ="tau"
         )
         self.tau = gp.tupledict()
-        self.tau.update(tau_int_user_set)
+        self.tau.update(tau_int)
         # self.tau.update(tau_int_default)
         self.tau.update(tau_cont)
 
-        self.m = self.model.addVars(((i,s) for i in all_nodes for s in self.S), vtype=GRB.CONTINUOUS , lb=0.0 , ub = 1.0 , name="m")
+        # self.m = self.model.addVars(((i,s) for i in all_nodes for s in self.S), vtype=GRB.CONTINUOUS , lb=0.0 , ub = 1.0 , name="m")
+        m_int = self.model.addVars(
+            ((i,s) for i in all_nodes if i in self.m_int_nodes for s in self.S) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "m"
+        )
+        m_cont = self.model.addVars(
+            ((i,s) for i in all_nodes if i not in self.m_int_nodes for s in self.S) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "m"
+        )
+        self.m = gp.tupledict()
+        self.m.update(m_int)
+        self.m.update(m_cont)
         self.b = self.model.addVars(((i, c, s) for i in self.I for c in self.C for s in self.S),vtype=GRB.CONTINUOUS, lb=0.0, ub=1.0, name="b")
         self.d = self.model.addVars(((i, c, j, s) for i in self.I for c in self.C for j in all_nodes if node_order(j) > i for s in self.S),vtype=GRB.CONTINUOUS, lb=0.0, ub=1.0, name="d")
-        self.u = self.model.addVars(self.I, vtype=GRB.CONTINUOUS, lb=0.0, ub=1.0, name="u")
+        # self.u = self.model.addVars(self.I, vtype=GRB.CONTINUOUS, lb=0.0, ub=1.0, name="u")
+        u_int = self.model.addVars(
+            (i for i in self.I if i in self.u_int_nodes) , vtype = GRB.INTEGER, lb = 0.0, ub =1.0, name = "u"
+        )
+        u_cont = self.model.addVars(
+            (i for i in self.I if i not in self.u_int_nodes ) , vtype = GRB.CONTINUOUS, lb = 0.0, ub =1.0, name = "u"
+        )
+        self.u = gp.tupledict()
+        self.u.update(u_int)
+        self.u.update(u_cont)
         self.z_u = self.model.addVars(((i, c, j) for i in self.I for c in self.C for j in all_nodes if node_order(j) > i),vtype=GRB.CONTINUOUS, lb=0.0, ub=1.0, name="z_u")
         self.o_u = self.model.addVars(((i, p) for i in self.I for p in self.P),vtype=GRB.CONTINUOUS, lb=0.0, ub=1.0, name="o_u")
 
@@ -396,7 +414,8 @@ class Encoding:
             plt.savefig(savepath, dpi=240, bbox_inches="tight")
             plt.close()
         else:
-            plt.show()
+            print("There is no path to save the image in")
+            plt.show() #removed because there is no display in cn07
     
     def calculate_explainability(self):
         return (self.inp.max_weight+1)*sum(1-self.u[i].X for i in self.I) + sum(self.inp.predicates[p].weight*self.o_u[i,p].X for i in self.I for p in self.P)
@@ -407,20 +426,35 @@ class Encoding:
 
 
 
-    
 def main():
     inp = Input("examples/wine", max_nodes=6)
-    ints_pos = {0,1,2,3,4,5}             # make root’s tau integral (add more indices if you like)
-    enc = Encoding(ints_pos, inp, root=0)
+    lam = {0,1,2,3,4,5}
+    tau = {0,1,2,3,4,5}
+    u   = set()          # keep u continuous in this test
+    m   = set()          # keep m continuous in this test
+    enc = Encoding(lam, tau, u, m, inp, root=0)
     enc.tree_constraints()
     enc.sample_constraints()
     enc.reachability_constraints()
-    sol = enc.solve(None,None,0.5,None)
+    sol = enc.solve(None, None, 0.5, None)
     print(f"Explainability is {enc.calculate_explainability()}")
     print(f"Correctness is {enc.calculate_correctness()}")
-
     print("Status:", sol["status"])
     print("Obj:", sol["obj"])
+    
+# def main():
+#     inp = Input("examples/wine", max_nodes=6)
+#     ints_pos = {0,1,2,3,4,5}             # make root’s tau integral (add more indices if you like)
+#     enc = Encoding(ints_pos, inp, root=0)
+#     enc.tree_constraints()
+#     enc.sample_constraints()
+#     enc.reachability_constraints()
+#     sol = enc.solve(None,None,0.5,None)
+#     print(f"Explainability is {enc.calculate_explainability()}")
+#     print(f"Correctness is {enc.calculate_correctness()}")
+
+#     print("Status:", sol["status"])
+#     print("Obj:", sol["obj"])
             
 
 
